@@ -24,6 +24,7 @@ dht DHT;
 OneWire OW(OW_PIN);
 waitTimer thTimer;
 int16_t celsius;
+uint8_t transmitDevTryMax;
 
 void serialEvent();
 
@@ -50,13 +51,6 @@ void setup() {
 	power_timer0_enable();
 	power_spi_enable();																		// enable only needed functions
 
-	// Attention: your controller my have other factory calibration !!
-	// If you are unsure about the internal RC-frequency of your chip then comment out setting OSCCAL -
-	// use factory default instead!
-	// my chip: 1kHz - 8A=994Hz, 8B=998,4Hz, 8C=1001,6Hz, 8E=1010Hz
-	// frequency measured with help of millis-ISR (toggling LED port and measuring frequency on it)
-	//uint8_t clk_corr=0x8B;
-	//OSCCAL = clk_corr;
 
 	// enable only what is really needed
 
@@ -87,6 +81,50 @@ void initTH1() {																			// init the sensor
 	#ifdef SER_DBG
 		dbg << "init th1\n";
 	#endif
+}
+
+void cnl0Change(void) {
+	
+	// set lowBat threshold
+	hm.bt.set(hm.ee.getRegAddr(0,0,0,REG_CHN0_LOW_BAT_LIMIT_TH)*10, BATTERY_MEAS_INTERVAL);
+
+	// set OSCCAL frequency
+	if (uint8_t oscCal = hm.ee.getRegAddr(0,0,0,REG_CHN0_OSCCAL)) {
+		dbg << F("will set OSCCAL: old=") << OSCCAL << F(", new=") << oscCal << F("\n");
+		// Attention: your controller my have other factory calibration !!
+		// If you are unsure about the internal RC-frequency of your chip then comment out setting OSCCAL -
+		// use factory default instead!
+		// my chip: 1kHz - 8A=994Hz, 8B=998,4Hz, 8C=1001,6Hz, 8E=1010Hz
+		// frequency measured with help of millis-ISR (toggling LED port and measuring frequency on it)
+
+		OSCCAL = oscCal;
+	} else {
+		dbg << F("will set default OSCCAL: ") << getDefaultOSCCAL() << F("\n");
+		OSCCAL = getDefaultOSCCAL();
+	}
+
+	// if burstRx is set ...
+	if (hm.ee.getRegAddr(0,0,0,REG_CHN0_BURST_RX)) {
+		dbg << F("PM=onradio\n");
+		hm.pw.setMode(POWER_MODE_WAKEUP_ONRADIO);											// set mode to wakeup on burst
+	} else {	// no burstRx wanted
+		// if no peer registered ==> then 8sec sleep is possible
+//		if (hm.ee.countFreeSlots(1) == hm.ee.getPeerSlots(1)) {
+			dbg << F("PM=8000ms\n");
+			hm.pw.setMode(POWER_MODE_WAKEUP_8000MS);										// set mode to awake every 8 secs
+//		} else {
+//			dbg << F("peers! setting burstRx=1\n");
+//			uint8_t arr[] = {REG_CHN0_BURST_RX, 0x01};
+//			hm.ee.setListArray(0,0,0,sizeof(arr),arr);										// set burstRx - is required when some peers are registered
+//			hm.pw.setMode(POWER_MODE_WAKEUP_ONRADIO);										// set power management mode
+//		}
+	}
+
+	// fetch transmitDevTryMax
+	if ((transmitDevTryMax = hm.ee.getRegAddr(0,0,0,REG_CHN0_TRANS_DEV_TRY_MAX)) > 10)
+		transmitDevTryMax = 10;
+	else if (transmitDevTryMax < 1)
+		transmitDevTryMax = 1;
 }
 
 // this is called when HM wants to send measured values to peers or master

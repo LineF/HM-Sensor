@@ -13,11 +13,12 @@
 
 	#define EXT_BATTERY_MEASUREMENT												// comment out to use internal battery measurement
 	#define BATTERY_FACTOR             18										// see excel table
+	#define BATTERY_MEAS_INTERVAL      3600000									// Battery measurment interval in msec
 	#define DEBOUNCE                   5
 
 	#if defined(__AVR_ATmega328P__)
 		//- hardware specific general setup
-		//#define PCINT_CALLBACK													// enables the pin change interrupt callback in user sketch
+		#define PCINT_CALLBACK													// enables the pin change interrupt callback in user sketch
 
 
 		//- cc1100 hardware CS and GDO0 definitions -------------------------------------------------------------------
