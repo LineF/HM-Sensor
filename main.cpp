@@ -102,6 +102,7 @@ void cnl0Change(void) {
 		dbg << F("will set default OSCCAL: ") << getDefaultOSCCAL() << F("\n");
 		OSCCAL = getDefaultOSCCAL();
 	}
+	calibrateWatchdog();
 
 	// if burstRx is set ...
 	if (hm.ee.getRegAddr(0,0,0,REG_CHN0_BURST_RX)) {

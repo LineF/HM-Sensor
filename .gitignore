@@ -1,0 +1,8 @@
+/.project
+/.vs
+/Arduino
+/Debug
+/NAS
+*.atsln
+*.componentinfo.xml
+*.cppproj
