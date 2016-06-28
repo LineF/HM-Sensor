@@ -57,8 +57,7 @@ void setup() {
 	#ifdef SER_DBG																			// some debug
 		dbgStart();																			// serial setup
 		dbg << F("HB_UW_Sen_TH_Pn\n");
-		dbg << F(LIB_VERSION_STRING);
-		_delay_ms (10);																		// ...and some information
+		dbg << F(LIB_VERSION_STRING);														// ...and some information
 	#endif
 	
 	// - AskSin related ---------------------------------------
@@ -142,7 +141,7 @@ void measureTH1(THSensor::s_meas *ptr) {
 	((uint8_t *)&(ptr->temp))[1] = t & 0xFF;
 	
 	#ifdef SER_DBG
-		//dbg << "msTH1 t: " << DHT.temperature << ", h: " << DHT.humidity << ' ' << _TIME << '\n'; _delay_ms(10);
+		//dbg << "msTH1 t: " << DHT.temperature << ", h: " << DHT.humidity << ' ' << _TIME << '\n';
 	#endif
 	// take humidity value from DHT22
 	ptr->hum = DHT.humidity / 10;
@@ -194,13 +193,12 @@ void measure() {
 		celsius = ((uint32_t)(OW.read() | (OW.read() << 8)) * 100) >> 4;					// we need only first two bytes from scratchpad
 	
 		#ifdef SER_DBG
-			dbg << "DS-t: " << celsius << ' ' << _TIME << '\n';
+			dbg << "DS-t: " << celsius << ' ' << _TIME << '\n'; Serial.flush();
 		#endif
 
 		digitalWrite(DHT_PWR, 0);															// power off DHT22
 		#ifdef SER_DBG
 			//dbg << "power off Sensor" << ' ' << _TIME << '\n';
-			_delay_ms(10);
 		#endif
 		state = mInit;
 	}
