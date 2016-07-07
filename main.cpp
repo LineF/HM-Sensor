@@ -14,7 +14,7 @@
 #include "OneWire.h"
 #include <avr/wdt.h>
 
-#define SER_DBG
+//#define SER_DBG
 
 #define DHT_PWR		9																		// power for DHT22
 #define DHT_PIN		6																		// this pin DHT22 is connected to
@@ -76,7 +76,6 @@ void setup() {
 void initTH1() {																			// init the sensor
 	
 	pinMode(DHT_PWR, OUTPUT);
-	pinMode(OW_PIN, INPUT_PULLUP);
 	
 	#ifdef SER_DBG
 		dbg << "init th1\n";
@@ -166,7 +165,9 @@ void measure() {
 	}
 	else if (state == mWait) {																// power on sensor and wait 1 sec
 		thTimer.set(1000);
+		pinMode(OW_PIN, INPUT_PULLUP);
 		digitalWrite(DHT_PWR, 1);															// power on here
+
 		state = mPwrOn;
 		#ifdef SER_DBG
 			//dbg << "power on Sensor" << ' ' << _TIME << '\n';
@@ -197,7 +198,10 @@ void measure() {
 			dbg << "DS-t: " << celsius << ' ' << _TIME << '\n';
 		#endif
 
-		digitalWrite(DHT_PWR, 0);															// power off DHT22
+		digitalWrite(DHT_PWR, 0);															// power off sensor
+		pinMode(OW_PIN, INPUT);
+		pinMode(DHT_PIN, INPUT);
+		
 		#ifdef SER_DBG
 			//dbg << "power off Sensor" << ' ' << _TIME << '\n';
 			_delay_ms(10);
