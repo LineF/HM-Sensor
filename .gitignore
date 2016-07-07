@@ -2,6 +2,7 @@
 /.vs
 /Arduino
 /Debug
+/Release
 /NAS
 *.atsln
 *.componentinfo.xml
