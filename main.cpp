@@ -14,7 +14,7 @@
 #include "OneWire.h"
 #include <avr/wdt.h>
 
-#define SER_DBG
+//#define SER_DBG
 
 #define DHT_PWR		9																		// power for DHT22
 #define DHT_PIN		6																		// this pin DHT22 is connected to
