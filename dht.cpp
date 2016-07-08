@@ -125,7 +125,7 @@ int8_t dht::_readSensor(uint8_t pin, uint8_t wakeupDelay, uint8_t leadingZeroBit
     digitalWrite(pin, LOW); // T-be
     delayMicroseconds(wakeupDelay * 1000UL);
     digitalWrite(pin, HIGH); // T-go
-    pinMode(pin, INPUT);
+    pinMode(pin, INPUT); // with pullup or not ??
 
     uint16_t loopCount = DHTLIB_TIMEOUT * 2;  // 200uSec max
     // while(digitalRead(pin) == HIGH)
