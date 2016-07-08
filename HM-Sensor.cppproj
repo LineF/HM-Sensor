@@ -1,0 +1,519 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
+  <PropertyGroup>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>7.0</ProjectVersion>
+    <ToolchainName>com.Atmel.AVRGCC8.CPP</ToolchainName>
+    <ProjectGuid>dce6c7e3-ee26-4d79-826b-08594b9ad897</ProjectGuid>
+    <avrdevice>ATmega328P</avrdevice>
+    <avrdeviceseries>none</avrdeviceseries>
+    <OutputType>Executable</OutputType>
+    <Language>CPP</Language>
+    <OutputFileName>$(MSBuildProjectName)</OutputFileName>
+    <OutputFileExtension>.elf</OutputFileExtension>
+    <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
+    <AssemblyName>HM-Sensor-Test2</AssemblyName>
+    <Name>HM-Sensor</Name>
+    <RootNamespace>HM-Sensor-Test2</RootNamespace>
+    <ToolchainFlavour>Native</ToolchainFlavour>
+    <KeepTimersRunning>true</KeepTimersRunning>
+    <OverrideVtor>false</OverrideVtor>
+    <CacheFlash>true</CacheFlash>
+    <ProgFlashFromRam>true</ProgFlashFromRam>
+    <RamSnippetAddress>0x20000000</RamSnippetAddress>
+    <UncachedRange />
+    <preserveEEPROM>true</preserveEEPROM>
+    <OverrideVtorValue>exception_table</OverrideVtorValue>
+    <BootSegment>2</BootSegment>
+    <eraseonlaunchrule>0</eraseonlaunchrule>
+    <ExternalProgrammingToolCommand />
+    <AsfFrameworkConfig>
+      <framework-data xmlns="">
+        <options />
+        <configurations />
+        <files />
+        <documentation help="" />
+        <offline-documentation help="" />
+        <dependencies>
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.27.3" />
+        </dependencies>
+      </framework-data>
+    </AsfFrameworkConfig>
+    <avrtool>com.atmel.avrdbg.tool.ispmk2</avrtool>
+    <avrtoolserialnumber>0000000000000</avrtoolserialnumber>
+    <avrdeviceexpectedsignature>0x1E950F</avrdeviceexpectedsignature>
+    <avrtoolinterface>ISP</avrtoolinterface>
+    <avrtoolinterfaceclock>1000000</avrtoolinterfaceclock>
+    <com_atmel_avrdbg_tool_ispmk2>
+      <ToolOptions>
+        <InterfaceProperties>
+          <IspClock>1000000</IspClock>
+          <DebugWireClockDiv>1000000</DebugWireClockDiv>
+        </InterfaceProperties>
+        <InterfaceName>ISP</InterfaceName>
+      </ToolOptions>
+      <ToolType>com.atmel.avrdbg.tool.ispmk2</ToolType>
+      <ToolNumber>0000000000000</ToolNumber>
+      <ToolName>AVRISP mkII</ToolName>
+    </com_atmel_avrdbg_tool_ispmk2>
+    <com_atmel_avrdbg_tool_simulator>
+      <ToolOptions xmlns="">
+        <InterfaceProperties>
+        </InterfaceProperties>
+        <InterfaceName>
+        </InterfaceName>
+      </ToolOptions>
+      <ToolType xmlns="">com.atmel.avrdbg.tool.simulator</ToolType>
+      <ToolNumber xmlns="">
+      </ToolNumber>
+      <ToolName xmlns="">Simulator</ToolName>
+    </com_atmel_avrdbg_tool_simulator>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <ToolchainSettings>
+      <AvrGccCpp>
+  <avrgcc.common.Device>-mmcu=atmega328p -B "%24(PackRepoDir)\atmel\ATmega_DFP\1.0.90\gcc\dev\atmega328p"</avrgcc.common.Device>
+  <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
+  <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
+  <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
+  <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
+  <avrgcc.common.outputfiles.usersignatures>False</avrgcc.common.outputfiles.usersignatures>
+  <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
+  <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
+  <avrgcc.compiler.symbols.DefSymbols>
+    <ListValues>
+      <Value>F_CPU=8000000</Value>
+      <Value>ARDUINO=10606</Value>
+      <Value>NDEBUG</Value>
+    </ListValues>
+  </avrgcc.compiler.symbols.DefSymbols>
+  <avrgcc.compiler.directories.IncludePaths>
+    <ListValues>
+      <Value>%24(PackRepoDir)\atmel\ATmega_DFP\1.0.90\include</Value>
+      <Value>../../_Libs/Arduino</Value>
+      <Value>../../_Libs</Value>
+    </ListValues>
+  </avrgcc.compiler.directories.IncludePaths>
+  <avrgcc.compiler.optimization.level>Optimize for size (-Os)</avrgcc.compiler.optimization.level>
+  <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
+  <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
+  <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+  <avrgcccpp.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcccpp.compiler.general.ChangeDefaultCharTypeUnsigned>
+  <avrgcccpp.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcccpp.compiler.general.ChangeDefaultBitFieldUnsigned>
+  <avrgcccpp.compiler.symbols.DefSymbols>
+    <ListValues>
+      <Value>ARDUINO=10606</Value>
+      <Value>F_CPU=8000000</Value>
+      <Value>NDEBUG</Value>
+    </ListValues>
+  </avrgcccpp.compiler.symbols.DefSymbols>
+  <avrgcccpp.compiler.directories.IncludePaths>
+    <ListValues>
+      <Value>%24(PackRepoDir)\atmel\ATmega_DFP\1.0.90\include</Value>
+      <Value>..</Value>
+      <Value>../NewAskSin</Value>
+      <Value>../../_Libs/Arduino</Value>
+      <Value>../../_Libs</Value>
+    </ListValues>
+  </avrgcccpp.compiler.directories.IncludePaths>
+  <avrgcccpp.compiler.optimization.level>Optimize for size (-Os)</avrgcccpp.compiler.optimization.level>
+  <avrgcccpp.compiler.optimization.PackStructureMembers>True</avrgcccpp.compiler.optimization.PackStructureMembers>
+  <avrgcccpp.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcccpp.compiler.optimization.AllocateBytesNeededForEnum>
+  <avrgcccpp.compiler.miscellaneous.OtherFlags>-std=c++11</avrgcccpp.compiler.miscellaneous.OtherFlags>
+  <avrgcccpp.linker.libraries.Libraries>
+    <ListValues>
+      <Value>libm</Value>
+    </ListValues>
+  </avrgcccpp.linker.libraries.Libraries>
+  <avrgcccpp.linker.libraries.LibrarySearchPaths>
+    <ListValues>
+      <Value>C:\Users\Martin\Documents\Atmel Studio\7.0\_Libs\Arduino</Value>
+    </ListValues>
+  </avrgcccpp.linker.libraries.LibrarySearchPaths>
+</AvrGccCpp>
+    </ToolchainSettings>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <ToolchainSettings>
+      <AvrGccCpp>
+  <avrgcc.common.Device>-mmcu=atmega328p -B "%24(PackRepoDir)\atmel\ATmega_DFP\1.0.90\gcc\dev\atmega328p"</avrgcc.common.Device>
+  <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
+  <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
+  <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
+  <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
+  <avrgcc.common.outputfiles.usersignatures>False</avrgcc.common.outputfiles.usersignatures>
+  <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
+  <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
+  <avrgcc.compiler.symbols.DefSymbols><ListValues>
+  <Value>F_CPU=8000000</Value>
+  <Value>ARDUINO=10606</Value>
+  <Value>DEBUG</Value>
+</ListValues></avrgcc.compiler.symbols.DefSymbols>
+  <avrgcc.compiler.directories.IncludePaths><ListValues><Value>%24(PackRepoDir)\atmel\ATmega_DFP\1.0.90\include</Value><Value>../../_Libs/Arduino</Value><Value>../../_Libs</Value></ListValues></avrgcc.compiler.directories.IncludePaths>
+  <avrgcc.compiler.optimization.level>Optimize for size (-Os)</avrgcc.compiler.optimization.level>
+  <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
+  <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
+  <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+  <avrgcccpp.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcccpp.compiler.general.ChangeDefaultCharTypeUnsigned>
+  <avrgcccpp.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcccpp.compiler.general.ChangeDefaultBitFieldUnsigned>
+  <avrgcccpp.compiler.symbols.DefSymbols><ListValues>
+  <Value>ARDUINO=10606</Value>
+  <Value>F_CPU=8000000</Value>
+  <Value>DEBUG</Value>
+  <Value>SER_DBG</Value>
+  <Value>EE_DBG</Value>
+  <Value>SN_DBG</Value>
+  <Value>RV_DBG</Value>
+</ListValues></avrgcccpp.compiler.symbols.DefSymbols>
+  <avrgcccpp.compiler.directories.IncludePaths><ListValues><Value>%24(PackRepoDir)\atmel\ATmega_DFP\1.0.90\include</Value><Value>..</Value><Value>../NewAskSin</Value><Value>../../_Libs/Arduino</Value><Value>../../_Libs</Value></ListValues></avrgcccpp.compiler.directories.IncludePaths>
+  <avrgcccpp.compiler.optimization.level>Optimize for size (-Os)</avrgcccpp.compiler.optimization.level>
+  <avrgcccpp.compiler.optimization.PackStructureMembers>True</avrgcccpp.compiler.optimization.PackStructureMembers>
+  <avrgcccpp.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcccpp.compiler.optimization.AllocateBytesNeededForEnum>
+  <avrgcccpp.compiler.warnings.AllWarnings>False</avrgcccpp.compiler.warnings.AllWarnings>
+  <avrgcccpp.compiler.miscellaneous.OtherFlags>-std=c++11</avrgcccpp.compiler.miscellaneous.OtherFlags>
+  <avrgcccpp.compiler.miscellaneous.DoNotDeleteTemporaryFiles>True</avrgcccpp.compiler.miscellaneous.DoNotDeleteTemporaryFiles>
+  <avrgcccpp.linker.libraries.Libraries><ListValues><Value>libm</Value></ListValues></avrgcccpp.linker.libraries.Libraries>
+  <avrgcccpp.linker.libraries.LibrarySearchPaths><ListValues><Value>C:\Users\Martin\Documents\Atmel Studio\7.0\_Libs\Arduino</Value></ListValues></avrgcccpp.linker.libraries.LibrarySearchPaths>
+  <avrgcc.compiler.optimization.DebugLevel>Default (-g2)</avrgcc.compiler.optimization.DebugLevel>
+  <avrgcccpp.compiler.optimization.DebugLevel>Default (-g2)</avrgcccpp.compiler.optimization.DebugLevel>
+  <avrgcccpp.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcccpp.assembler.debugging.DebugLevel>
+</AvrGccCpp>
+    </ToolchainSettings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\_Libs\Arduino\HardwareSerial.cpp">
+      <SubType>compile</SubType>
+      <Link>Arduino\HardwareSerial.cpp</Link>
+    </Compile>
+    <Compile Include="..\_Libs\Arduino\HardwareSerial.h">
+      <SubType>compile</SubType>
+      <Link>Arduino\HardwareSerial.h</Link>
+    </Compile>
+    <Compile Include="..\_Libs\Arduino\HardwareSerial0.cpp">
+      <SubType>compile</SubType>
+      <Link>Arduino\HardwareSerial0.cpp</Link>
+    </Compile>
+    <Compile Include="..\_Libs\Arduino\HardwareSerial1.cpp">
+      <SubType>compile</SubType>
+      <Link>Arduino\HardwareSerial1.cpp</Link>
+    </Compile>
+    <Compile Include="..\_Libs\Arduino\HardwareSerial2.cpp">
+      <SubType>compile</SubType>
+      <Link>Arduino\HardwareSerial2.cpp</Link>
+    </Compile>
+    <Compile Include="..\_Libs\Arduino\HardwareSerial3.cpp">
+      <SubType>compile</SubType>
+      <Link>Arduino\HardwareSerial3.cpp</Link>
+    </Compile>
+    <Compile Include="..\_Libs\Arduino\HardwareSerial_private.h">
+      <SubType>compile</SubType>
+      <Link>Arduino\HardwareSerial_private.h</Link>
+    </Compile>
+    <Compile Include="..\_Libs\Arduino\Print.cpp">
+      <SubType>compile</SubType>
+      <Link>Arduino\Print.cpp</Link>
+    </Compile>
+    <Compile Include="..\_Libs\Arduino\Print.h">
+      <SubType>compile</SubType>
+      <Link>Arduino\Print.h</Link>
+    </Compile>
+    <Compile Include="..\_Libs\Arduino\wiring.c">
+      <SubType>compile</SubType>
+      <Link>Arduino\wiring.c</Link>
+    </Compile>
+    <Compile Include="..\_Libs\Arduino\wiring_digital.c">
+      <SubType>compile</SubType>
+      <Link>Arduino\wiring_digital.c</Link>
+    </Compile>
+    <Compile Include="..\_Libs\pins_arduino.h">
+      <SubType>compile</SubType>
+      <Link>Arduino\pins_arduino.h</Link>
+    </Compile>
+    <Compile Include="dht.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="dht.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hardware.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="hmkey.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="main.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="NewAskSin\aes.h">
+      <SubType>compile</SubType>
+      <Link>nas\aes.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\aes128_dec.c">
+      <SubType>compile</SubType>
+      <Link>nas\aes128_dec.c</Link>
+    </Compile>
+    <Compile Include="NewAskSin\aes128_dec.h">
+      <SubType>compile</SubType>
+      <Link>nas\aes128_dec.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\aes128_enc.c">
+      <SubType>compile</SubType>
+      <Link>nas\aes128_enc.c</Link>
+    </Compile>
+    <Compile Include="NewAskSin\aes128_enc.h">
+      <SubType>compile</SubType>
+      <Link>nas\aes128_enc.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\aes_dec.c">
+      <SubType>compile</SubType>
+      <Link>nas\aes_dec.c</Link>
+    </Compile>
+    <Compile Include="NewAskSin\aes_dec.h">
+      <SubType>compile</SubType>
+      <Link>nas\aes_dec.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\aes_enc.c">
+      <SubType>compile</SubType>
+      <Link>nas\aes_enc.c</Link>
+    </Compile>
+    <Compile Include="NewAskSin\aes_enc.h">
+      <SubType>compile</SubType>
+      <Link>nas\aes_enc.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\aes_invsbox.c">
+      <SubType>compile</SubType>
+      <Link>nas\aes_invsbox.c</Link>
+    </Compile>
+    <Compile Include="NewAskSin\aes_invsbox.h">
+      <SubType>compile</SubType>
+      <Link>nas\aes_invsbox.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\aes_keyschedule.c">
+      <SubType>compile</SubType>
+      <Link>nas\aes_keyschedule.c</Link>
+    </Compile>
+    <Compile Include="NewAskSin\aes_keyschedule.h">
+      <SubType>compile</SubType>
+      <Link>nas\aes_keyschedule.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\aes_sbox.c">
+      <SubType>compile</SubType>
+      <Link>nas\aes_sbox.c</Link>
+    </Compile>
+    <Compile Include="NewAskSin\aes_sbox.h">
+      <SubType>compile</SubType>
+      <Link>nas\aes_sbox.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\aes_types.h">
+      <SubType>compile</SubType>
+      <Link>nas\aes_types.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\AS.cpp">
+      <SubType>compile</SubType>
+      <Link>nas\AS.cpp</Link>
+    </Compile>
+    <Compile Include="NewAskSin\AS.h">
+      <SubType>compile</SubType>
+      <Link>nas\AS.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\Battery.cpp">
+      <SubType>compile</SubType>
+      <Link>nas\Battery.cpp</Link>
+    </Compile>
+    <Compile Include="NewAskSin\Battery.h">
+      <SubType>compile</SubType>
+      <Link>nas\Battery.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\CC1101.cpp">
+      <SubType>compile</SubType>
+      <Link>nas\CC1101.cpp</Link>
+    </Compile>
+    <Compile Include="NewAskSin\CC1101.h">
+      <SubType>compile</SubType>
+      <Link>nas\CC1101.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\cm.cpp">
+      <SubType>compile</SubType>
+      <Link>nas\cm.cpp</Link>
+    </Compile>
+    <Compile Include="NewAskSin\cm.h">
+      <SubType>compile</SubType>
+      <Link>nas\cm.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\cmBlind.cpp">
+      <SubType>compile</SubType>
+      <Link>nas\cmBlind.cpp</Link>
+    </Compile>
+    <Compile Include="NewAskSin\cmBlind.h">
+      <SubType>compile</SubType>
+      <Link>nas\cmBlind.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\cmDimmer.cpp">
+      <SubType>compile</SubType>
+      <Link>nas\cmDimmer.cpp</Link>
+    </Compile>
+    <Compile Include="NewAskSin\cmDimmer.h">
+      <SubType>compile</SubType>
+      <Link>nas\cmDimmer.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\cmPowerSens.cpp">
+      <SubType>compile</SubType>
+      <Link>nas\cmPowerSens.cpp</Link>
+    </Compile>
+    <Compile Include="NewAskSin\cmPowerSens.h">
+      <SubType>compile</SubType>
+      <Link>nas\cmPowerSens.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\cmRemote.cpp">
+      <SubType>compile</SubType>
+      <Link>nas\cmRemote.cpp</Link>
+    </Compile>
+    <Compile Include="NewAskSin\cmRemote.h">
+      <SubType>compile</SubType>
+      <Link>nas\cmRemote.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\cmSwitch.cpp">
+      <SubType>compile</SubType>
+      <Link>nas\cmSwitch.cpp</Link>
+    </Compile>
+    <Compile Include="NewAskSin\cmSwitch.h">
+      <SubType>compile</SubType>
+      <Link>nas\cmSwitch.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\ConfButton.cpp">
+      <SubType>compile</SubType>
+      <Link>nas\ConfButton.cpp</Link>
+    </Compile>
+    <Compile Include="NewAskSin\ConfButton.h">
+      <SubType>compile</SubType>
+      <Link>nas\ConfButton.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\Defines.h">
+      <SubType>compile</SubType>
+      <Link>nas\Defines.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\EEprom.cpp">
+      <SubType>compile</SubType>
+      <Link>nas\EEprom.cpp</Link>
+    </Compile>
+    <Compile Include="NewAskSin\EEprom.h">
+      <SubType>compile</SubType>
+      <Link>nas\EEprom.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\Fastdelegate.h">
+      <SubType>compile</SubType>
+      <Link>nas\Fastdelegate.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\gf256mul.h">
+      <SubType>compile</SubType>
+      <Link>nas\gf256mul.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\gf256mul.S">
+      <SubType>compile</SubType>
+      <Link>nas\gf256mul.S</Link>
+    </Compile>
+    <Compile Include="NewAskSin\HAL.cpp">
+      <SubType>compile</SubType>
+      <Link>nas\HAL.cpp</Link>
+    </Compile>
+    <Compile Include="NewAskSin\HAL.h">
+      <SubType>compile</SubType>
+      <Link>nas\HAL.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\HAL_atmega328P.h">
+      <SubType>compile</SubType>
+      <Link>nas\HAL_atmega328P.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\HAL_atmega32U4.h">
+      <SubType>compile</SubType>
+      <Link>nas\HAL_atmega32U4.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\HAL_extern.h">
+      <SubType>compile</SubType>
+      <Link>nas\HAL_extern.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\InfraredSignalDetector.cpp">
+      <SubType>compile</SubType>
+      <Link>nas\InfraredSignalDetector.cpp</Link>
+    </Compile>
+    <Compile Include="NewAskSin\InfraredSignalDetector.h">
+      <SubType>compile</SubType>
+      <Link>nas\InfraredSignalDetector.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\macros.h">
+      <SubType>compile</SubType>
+      <Link>nas\macros.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\Power.cpp">
+      <SubType>compile</SubType>
+      <Link>nas\Power.cpp</Link>
+    </Compile>
+    <Compile Include="NewAskSin\Power.h">
+      <SubType>compile</SubType>
+      <Link>nas\Power.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\Receive.cpp">
+      <SubType>compile</SubType>
+      <Link>nas\Receive.cpp</Link>
+    </Compile>
+    <Compile Include="NewAskSin\Receive.h">
+      <SubType>compile</SubType>
+      <Link>nas\Receive.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\Registrar.cpp">
+      <SubType>compile</SubType>
+      <Link>nas\Registrar.cpp</Link>
+    </Compile>
+    <Compile Include="NewAskSin\Registrar.h">
+      <SubType>compile</SubType>
+      <Link>nas\Registrar.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\Send.cpp">
+      <SubType>compile</SubType>
+      <Link>nas\Send.cpp</Link>
+    </Compile>
+    <Compile Include="NewAskSin\Send.h">
+      <SubType>compile</SubType>
+      <Link>nas\Send.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\StatusLed.cpp">
+      <SubType>compile</SubType>
+      <Link>nas\StatusLed.cpp</Link>
+    </Compile>
+    <Compile Include="NewAskSin\StatusLed.h">
+      <SubType>compile</SubType>
+      <Link>nas\StatusLed.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\THSensor.cpp">
+      <SubType>compile</SubType>
+      <Link>nas\THSensor.cpp</Link>
+    </Compile>
+    <Compile Include="NewAskSin\THSensor.h">
+      <SubType>compile</SubType>
+      <Link>nas\THSensor.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\Version.h">
+      <SubType>compile</SubType>
+      <Link>nas\Version.h</Link>
+    </Compile>
+    <Compile Include="OneWire.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="OneWire.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="register.h">
+      <SubType>compile</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Arduino" />
+    <Folder Include="newasksin\" />
+    <Folder Include="newasksin\" />
+    <Folder Include="NAS" />
+  </ItemGroup>
+  <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
+</Project>

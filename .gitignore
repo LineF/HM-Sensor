@@ -4,6 +4,3 @@
 /Debug
 /Release
 /NAS
-*.atsln
-*.componentinfo.xml
-*.cppproj
