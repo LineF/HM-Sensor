@@ -194,7 +194,7 @@ void measure() {
 		celsius = ((uint32_t)(OW.read() | (OW.read() << 8)) * 100) >> 4;					// we need only first two bytes from scratchpad
 	
 		#ifdef SER_DBG
-			dbg << "DS-t: " << celsius << ' ' << _TIME << '\n'; Serial.flush();
+			dbg << "DS-t: " << celsius << ' ' << _TIME << '\n';
 		#endif
 
 		digitalWrite(DHT_PWR, 0);															// power off sensor
