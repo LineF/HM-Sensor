@@ -91,21 +91,26 @@
 	/*
 	* Channel - List translation table
 	* channel, list, startIndex, start address in EEprom, hidden
+	* do not edit the table, if you need more peers edit the defines accordingly.
 	*/
+	#define PHY_ADDR_START 0x20
+	#define CNL_01_PEERS   6 
+
 	EE::s_cnlTbl cnlTbl[] = {
-		// cnl, lst, sIdx,  sLen, pAddr,  hidden
-		{ 0, 0, 0x00,  8, 0x001f, 0, },
-		{ 1, 4, 0x08,  2, 0x0027, 0, },		// 2 reg * 8 peers = 16 byte
-	};  // 14 byte
+		// cnl, lst, sIdx, sLen, hide, pAddr 
+		{ 0,   0,    0,    8,    0, PHY_ADDR_START },
+		{ 1,   4,    8,    2,    0, cnlTbl[0].pAddr + cnlTbl[0].sLen },
+	}; // 91 byte 
 
 	/*
 	* Peer-Device-List-Table
 	* channel, maximum allowed peers, start address in EEprom
 	*/
 	EE::s_peerTbl peerTbl[] = {
-		// cnl, peerMax, pAddr;
-		{ 1, 6, 0x0037, },					// 8 * 4 = 32 byte
-	};	// 4 Byte
+		// pMax, pAddr; 
+		{ 0, cnlTbl[1].pAddr + (cnlTbl[1].sLen * CNL_01_PEERS) },
+		{ CNL_01_PEERS, peerTbl[0].pAddr + (peerTbl[0].pMax * 4) },
+	}; // 18 byte 	
 
 	/*
 	* handover to AskSin lib
