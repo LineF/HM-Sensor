@@ -175,6 +175,7 @@
       <Value>SN_DBG</Value>
       <Value>RV_DBG</Value>
       <Value>AS_DBG</Value>
+      <Value>PW_DBG</Value>
     </ListValues>
   </avrgcccpp.compiler.symbols.DefSymbols>
   <avrgcccpp.compiler.directories.IncludePaths>
