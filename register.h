@@ -77,9 +77,11 @@
 	 * @See: cnlTbl
 	 */
 	const uint8_t cnlAddr[] PROGMEM = {
-		// List0-Register
+		// channel: 0, list: 0
 		0x01,0x05,0x0a,0x0b,0x0c,0x12,0x14,0x23,
-		// List4-Register
+		// channel: 1, list: 1
+		//0x08,
+		// channel: 1, list: 4
 		0x01,0x02,
 	};  // 10 byte
 	// List 0: 0x01, 0x05, 0x0A, 0x0B, 0x0C, 0x12, 0x14, 0x23
@@ -131,20 +133,20 @@
 	#define PHY_ADDR_START 0x20
 	#define CNL_01_PEERS   6 
 
-	EE::s_cnlTbl cnlTbl[] = {
+	const EE::s_cnlTbl cnlTbl[] = {
 		// cnl, lst, sIdx, sLen, hide, pAddr 
 		{ 0,   0,    0,    8,    0, PHY_ADDR_START },
 		{ 1,   4,    8,    2,    0, cnlTbl[0].pAddr + cnlTbl[0].sLen },
 	}; // 20 byte 
 
-	/*
-	* Peer-Device-List-Table
-	* channel, maximum allowed peers, start address in EEprom
-	*/
-	EE::s_peerTbl peerTbl[] = {
-		// pMax, pAddr; 
-		{ 0, cnlTbl[1].pAddr + (cnlTbl[1].sLen * CNL_01_PEERS) },
-		{ CNL_01_PEERS, peerTbl[0].pAddr + (peerTbl[0].pMax * 4) },
+	/**
+	 * @brief Peer-Device-List-Table
+	 * maximum allowed peers, link to row in cnlTbl, start address in EEprom
+	 */
+	const EE::s_peerTbl peerTbl[] = {
+		// pMax, pLink, pAddr; 
+		{            0, 0, cnlTbl[1].pAddr + (cnlTbl[1].sLen * CNL_01_PEERS) },
+		{ CNL_01_PEERS, 1, peerTbl[0].pAddr + (peerTbl[0].pMax * 4) },
 	}; // 24 byte 	
 
     /**
@@ -152,16 +154,24 @@
      * amount of user channels, amount of lines in the channel table,
      * link to devIdent byte array, link to cnlAddr byte array
      */
-	EE::s_devDef devDef = {
-		1, 2, devIdnt, cnlAddr,
-	};	// 6 Byte
+	//EE::s_devDef devDef = {
+	//	1, 2, devIdnt, cnlAddr,
+	//};	// 6 Byte
+
+	/**
+	 * @brief Struct with basic information for the AskSin library.
+	 * amount of user channels, amount of lines in the channel table,
+	 * link to devIdent byte array, link to cnlAddr byte array
+	 */
+	const uint8_t cnl_max = 1;
+	const uint8_t cnl_tbl_max = 3;
 
     /**
      * @brief Sizing of the user module register table.
      * Within this register table all user modules are registered to make
      * them accessible for the AskSin library
      */
-	RG::s_modTable modTbl[1];
+	RG::s_modTable modTbl[cnl_max + 1];
 
 
     /**
@@ -177,7 +187,7 @@
 		cnl0Change();														// initialize with values from eeprom
 
 		// channel 1 section 
-		thsens.regInHM(1, 4, &hm);											// register sensor module on channel 1, with a list4 and introduce asksin instance
+		thsens.regInHM(1, 4);													// register sensor module on channel 1, with a list4 and introduce asksin instance
 		thsens.config(&initTH1, &measureTH1);								// configure the user class and handover addresses to respective functions and variables
 	}
 
@@ -194,10 +204,10 @@
 		// some debug
 		dbg << F("First time start active:\n");
 		dbg << F("cnl\tlst\tsIdx\tsLen\thide\tpAddr\n");
-		for (uint8_t i = 0; i < devDef.lstNbr; i++) {
+		//for (uint8_t i = 0; i < devDef.lstNbr; i++) {
 			// cnl, lst, sIdx, sLen, hide, pAddr 
-			dbg << cnlTbl[i].cnl << "\t" << cnlTbl[i].lst << "\t" << cnlTbl[i].sIdx << "\t" << cnlTbl[i].sLen << "\t" << cnlTbl[i].vis << "\t" << cnlTbl[i].pAddr << "\n";
-		}
+			//dbg << cnlTbl[i].cnl << "\t" << cnlTbl[i].lst << "\t" << cnlTbl[i].sIdx << "\t" << cnlTbl[i].sLen << "\t" << cnlTbl[i].vis << "\t" << cnlTbl[i].pAddr << "\n";
+		//}
     #endif
 
 		// fill register with default values, peer registers are not filled while done in usermodules
