@@ -113,9 +113,9 @@ void cnl0Change(void) {
 		hm.pw.setMode(POWER_MODE_WAKEUP_ONRADIO);											// set mode to wakeup on burst
 	} else {	// no burstRx wanted
 		#ifdef SER_DBG
-			dbg << F("PM=8000ms\n");
+			dbg << F("PM=250ms\n");
 		#endif
-			hm.pw.setMode(POWER_MODE_WAKEUP_8000MS);										// set mode to awake every 8 secs
+			hm.pw.setMode(POWER_MODE_WAKEUP_250MS);										// set mode to awake every 8 secs
 	}
 
 	// fetch transmitDevTryMax
