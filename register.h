@@ -8,6 +8,7 @@
     #include <AS.h>
     #include "hardware.h"
     #include "hmkey.h"
+	#include <cmMaintenance.h>
 	#include <THSensor.h>
 
 	// Register in Channel 0
@@ -26,7 +27,11 @@
      * to be defined in the user sketch.
      */
 	AS hm;                                                                  // asksin framework
-	THSensor thsens;                                                        // create instance of channel module
+	//THSensor thsens;                                                        // create instance of channel module
+	cmMaster *pcnlModule[2] = {
+		new cmMaintenance(&cnlTbl[0], &cnlTbl[0], &peerTbl[0]),
+		// new cmSwitch(&cnlTbl[1], &cnlTbl[2], &peerTbl[1]),
+	};
 
 	// some forward declarations
 	extern void initTH1();
@@ -106,7 +111,7 @@
 	 * This values are the defined default values and should be set
 	 * in the first start function.
 	 */
-    const uint8_t cnlDefs[] = {
+    const uint8_t cnlDefs[] PROGMEM = {
         // channel: 0, list: 0
         0x00,0x40,0x00,0x00,0x00,0x15,0x03,0x00,
 		// channel: 1, list: 1
@@ -133,7 +138,7 @@
 	#define PHY_ADDR_START 0x20
 	#define CNL_01_PEERS   6 
 
-	const EE::s_cnlTbl cnlTbl[] = {
+	const s_cnlTbl cnlTbl[] = {
 		// cnl, lst, sIdx, sLen, hide, pAddr 
 		{ 0,   0,    0,    8,    0, PHY_ADDR_START },
 		{ 1,   4,    8,    2,    0, cnlTbl[0].pAddr + cnlTbl[0].sLen },
@@ -143,7 +148,7 @@
 	 * @brief Peer-Device-List-Table
 	 * maximum allowed peers, link to row in cnlTbl, start address in EEprom
 	 */
-	const EE::s_peerTbl peerTbl[] = {
+	const s_peerTbl peerTbl[] = {
 		// pMax, pLink, pAddr; 
 		{            0, 0, cnlTbl[1].pAddr + (cnlTbl[1].sLen * CNL_01_PEERS) },
 		{ CNL_01_PEERS, 1, peerTbl[0].pAddr + (peerTbl[0].pMax * 4) },
@@ -164,14 +169,7 @@
 	 * link to devIdent byte array, link to cnlAddr byte array
 	 */
 	const uint8_t cnl_max = 1;
-	const uint8_t cnl_tbl_max = 3;
-
-    /**
-     * @brief Sizing of the user module register table.
-     * Within this register table all user modules are registered to make
-     * them accessible for the AskSin library
-     */
-	RG::s_modTable modTbl[cnl_max + 1];
+	const uint8_t cnl_tbl_max = 2;
 
 
     /**
@@ -182,13 +180,13 @@
 	void everyTimeStart(void) {
 		
         // channel 0 section 
-		hm.ld.set(welcome);
-		hm.confButton.config(1);
+		led.set(welcome);
+		btn.config(1);
 		cnl0Change();														// initialize with values from eeprom
 
 		// channel 1 section 
-		thsens.regInHM(1, 4);													// register sensor module on channel 1, with a list4 and introduce asksin instance
-		thsens.config(&initTH1, &measureTH1);								// configure the user class and handover addresses to respective functions and variables
+		//thsens.regInHM(1, 4);													// register sensor module on channel 1, with a list4 and introduce asksin instance
+		//thsens.config(&initTH1, &measureTH1);								// configure the user class and handover addresses to respective functions and variables
 	}
 
     /**
@@ -204,17 +202,16 @@
 		// some debug
 		dbg << F("First time start active:\n");
 		dbg << F("cnl\tlst\tsIdx\tsLen\thide\tpAddr\n");
-		//for (uint8_t i = 0; i < devDef.lstNbr; i++) {
-			// cnl, lst, sIdx, sLen, hide, pAddr 
-			//dbg << cnlTbl[i].cnl << "\t" << cnlTbl[i].lst << "\t" << cnlTbl[i].sIdx << "\t" << cnlTbl[i].sLen << "\t" << cnlTbl[i].vis << "\t" << cnlTbl[i].pAddr << "\n";
-		//}
+		for (uint8_t i = 0; i < cnl_tbl_max; i++) {
+			// cnl, lst, sIdx, sLen, hide, pAddr
+			dbg << cnlTbl[i].cnl << "\t" << cnlTbl[i].lst << "\t" << cnlTbl[i].sIdx << "\t" << cnlTbl[i].sLen << "\t" << cnlTbl[i].vis << "\t" << cnlTbl[i].pAddr << "\n";
+		}
     #endif
 
 		// fill register with default values, peer registers are not filled while done in usermodules
-		hm.ee.setList(0, 0, 0, (uint8_t*)&cnlDefs[0]);
-		//hm.ee.setList(1, 1, 0, (uint8_t*)&cnlDefs[6]);
+		//hm.ee.setList(0, 0, 0, (uint8_t*)&cnlDefs[0]);
 
 		// format peer db
-		hm.ee.clearPeers();
+		//hm.ee.clearPeers();
 	}
 #endif

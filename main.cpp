@@ -12,6 +12,7 @@
 #include "register.h"																		// configuration sheet
 #include "dht.h"
 #include "OneWire.h"
+#include "cppfix.h"
 #include <avr/wdt.h>
 
 //#define SER_DBG
@@ -19,6 +20,14 @@
 #define DHT_PWR		9																		// power for DHT22
 #define DHT_PIN		6																		// this pin DHT22 is connected to
 #define OW_PIN		5																		// this pin DS18B20 is connected to
+
+#include "00_debug-flag.h"
+#ifdef SER_DBG
+#define DBG(...) Serial ,__VA_ARGS__
+#else
+#define DBG(...)
+#endif
+
 
 dht DHT;
 OneWire OW(OW_PIN);
@@ -68,6 +77,11 @@ void setup() {
 	#ifdef SER_DBG
 		dbg << F("HMID: ") << _HEX(HMID,3) << F(", MAID: ") << _HEX(MAID,3) << F("\n\n");	// some debug
 	#endif
+
+	while(1)
+	{
+		DBG(F(".")); _delay_ms(1000);
+	}
 }
 
 
@@ -84,10 +98,10 @@ void initTH1() {																			// init the sensor
 void cnl0Change(void) {
 	
 	// set lowBat threshold
-	hm.bt.set(hm.ee.getRegAddr(0,0,0,REG_CHN0_LOW_BAT_LIMIT_TH)*10, BATTERY_MEAS_INTERVAL);
+	bat.set(ee.getRegAddr(0,0,0,REG_CHN0_LOW_BAT_LIMIT_TH)*10, BATTERY_MEAS_INTERVAL);
 
 	// set OSCCAL frequency
-	if (uint8_t oscCal = hm.ee.getRegAddr(0,0,0,REG_CHN0_OSCCAL)) {
+	if (uint8_t oscCal = ee.getRegAddr(0,0,0,REG_CHN0_OSCCAL)) {
 	#ifdef SER_DBG
 		dbg << F("will set OSCCAL: old=") << OSCCAL << F(", new=") << oscCal << F("\n");
 	#endif
@@ -106,20 +120,20 @@ void cnl0Change(void) {
 	calibrateWatchdog();
 
 	// if burstRx is set ...
-	if (hm.ee.getRegAddr(0,0,0,REG_CHN0_BURST_RX)) {
+	if (ee.getRegAddr(0,0,0,REG_CHN0_BURST_RX)) {
 	#ifdef SER_DBG
 		dbg << F("PM=onradio\n");
 	#endif
-		hm.pw.setMode(POWER_MODE_WAKEUP_ONRADIO);											// set mode to wakeup on burst
+		pom.setMode(POWER_MODE_WAKEUP_ONRADIO);											// set mode to wakeup on burst
 	} else {	// no burstRx wanted
 		#ifdef SER_DBG
 			dbg << F("PM=8000ms\n");
 		#endif
-			hm.pw.setMode(POWER_MODE_WAKEUP_8000MS);										// set mode to awake every 8 secs
+			pom.setMode(POWER_MODE_WAKEUP_8000MS);										// set mode to awake every 8 secs
 	}
 
 	// fetch transmitDevTryMax
-	if ((transmitDevTryMax = hm.ee.getRegAddr(0,0,0,REG_CHN0_TRANS_DEV_TRY_MAX)) > 10)
+	if ((transmitDevTryMax = ee.getRegAddr(0,0,0,REG_CHN0_TRANS_DEV_TRY_MAX)) > 10)
 		transmitDevTryMax = 10;
 	else if (transmitDevTryMax < 1)
 		transmitDevTryMax = 1;
@@ -144,7 +158,7 @@ void measureTH1(THSensor::s_meas *ptr) {
 	// take humidity value from DHT22
 	ptr->hum = DHT.humidity / 10;
 	// fetch battery voltage
-	t = hm.bt.getVolts();
+	t = bat.getVolts();
 	((uint8_t *)&(ptr->bat))[0] = t >> 8;
 	((uint8_t *)&(ptr->bat))[1] = t & 0xFF;
 }
@@ -235,7 +249,7 @@ void serialEvent() {
 		uint8_t inChar = (uint8_t)Serial.read();											// read a byte
 		if (inChar == '\n') {																// send to receive routine
 			i = 0;
-			hm.sn.active = 1;
+			snd.active = 1;
 		}
 		
 		if      ((inChar>96) && (inChar<103)) inChar-=87;									// a - f
@@ -243,8 +257,8 @@ void serialEvent() {
 		else if ((inChar>47) && (inChar<58))  inChar-=48;									// 0 - 9
 		else continue;
 		
-		if (i % 2 == 0) hm.sn.buf[i/2] = inChar << 4;										// high byte
-		else hm.sn.buf[i/2] |= inChar;														// low byte
+		if (i % 2 == 0) snd.buf[i/2] = inChar << 4;										// high byte
+		else snd.buf[i/2] |= inChar;														// low byte
 		
 		i++;
 	}
