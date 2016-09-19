@@ -22,11 +22,6 @@
 #define OW_PIN		5																		// this pin DS18B20 is connected to
 
 #include "00_debug-flag.h"
-#ifdef SER_DBG
-#define DBG(...) Serial ,__VA_ARGS__
-#else
-#define DBG(...)
-#endif
 
 
 dht DHT;
@@ -64,9 +59,11 @@ void setup() {
 	// enable only what is really needed
 
 	#ifdef SER_DBG																			// some debug
-		dbgStart();																			// serial setup
-		dbg << F("HB_UW_Sen_TH_Pn\n");
-		dbg << F(LIB_VERSION_STRING);														// ...and some information
+		DBG_START(SER, F("\nSER.\n") );														// ...some debug
+
+		//dbgStart();																		// serial setup
+		DBG(SER, F("HB_UW_Sen_TH_Pn\n"));
+		DBG(SER, F(LIB_VERSION_STRING));													// ...and some information
 	#endif
 	
 	// - AskSin related ---------------------------------------
@@ -75,12 +72,12 @@ void setup() {
 
 	// - user related -----------------------------------------
 	#ifdef SER_DBG
-		dbg << F("HMID: ") << _HEX(HMID,3) << F(", MAID: ") << _HEX(MAID,3) << F("\n\n");	// some debug
+		DBG(SER, F("HMID: "), _HEX(dev_ident.HMID,3), F(", MAID: "), _HEX(MAID,3), F("\n\n"));	// some debug
 	#endif
 
 	while(1)
 	{
-		DBG(F(".")); _delay_ms(1000);
+		DBG(SER, F(".")); _delay_ms(1000);
 	}
 }
 
@@ -98,10 +95,10 @@ void initTH1() {																			// init the sensor
 void cnl0Change(void) {
 	
 	// set lowBat threshold
-	bat.set(ee.getRegAddr(0,0,0,REG_CHN0_LOW_BAT_LIMIT_TH)*10, BATTERY_MEAS_INTERVAL);
+	bat.set(ee_list.getRegAddr(0,0,0,REG_CHN0_LOW_BAT_LIMIT_TH)*10, BATTERY_MEAS_INTERVAL);
 
 	// set OSCCAL frequency
-	if (uint8_t oscCal = ee.getRegAddr(0,0,0,REG_CHN0_OSCCAL)) {
+	if (uint8_t oscCal = ee_list.getRegAddr(0,0,0,REG_CHN0_OSCCAL)) {
 	#ifdef SER_DBG
 		dbg << F("will set OSCCAL: old=") << OSCCAL << F(", new=") << oscCal << F("\n");
 	#endif
@@ -120,7 +117,7 @@ void cnl0Change(void) {
 	calibrateWatchdog();
 
 	// if burstRx is set ...
-	if (ee.getRegAddr(0,0,0,REG_CHN0_BURST_RX)) {
+	if (ee_list.getRegAddr(0,0,0,REG_CHN0_BURST_RX)) {
 	#ifdef SER_DBG
 		dbg << F("PM=onradio\n");
 	#endif
@@ -133,7 +130,7 @@ void cnl0Change(void) {
 	}
 
 	// fetch transmitDevTryMax
-	if ((transmitDevTryMax = ee.getRegAddr(0,0,0,REG_CHN0_TRANS_DEV_TRY_MAX)) > 10)
+	if ((transmitDevTryMax = ee_list.getRegAddr(0,0,0,REG_CHN0_TRANS_DEV_TRY_MAX)) > 10)
 		transmitDevTryMax = 10;
 	else if (transmitDevTryMax < 1)
 		transmitDevTryMax = 1;
@@ -249,7 +246,7 @@ void serialEvent() {
 		uint8_t inChar = (uint8_t)Serial.read();											// read a byte
 		if (inChar == '\n') {																// send to receive routine
 			i = 0;
-			snd.active = 1;
+			snd_msg.active = 1;
 		}
 		
 		if      ((inChar>96) && (inChar<103)) inChar-=87;									// a - f
@@ -257,8 +254,8 @@ void serialEvent() {
 		else if ((inChar>47) && (inChar<58))  inChar-=48;									// 0 - 9
 		else continue;
 		
-		if (i % 2 == 0) snd.buf[i/2] = inChar << 4;										// high byte
-		else snd.buf[i/2] |= inChar;														// low byte
+		if (i % 2 == 0) snd_msg.buf[i/2] = inChar << 4;										// high byte
+		else snd_msg.buf[i/2] |= inChar;														// low byte
 		
 		i++;
 	}

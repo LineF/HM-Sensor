@@ -28,10 +28,22 @@
      */
 	AS hm;                                                                  // asksin framework
 	//THSensor thsens;                                                        // create instance of channel module
-	cmMaster *pcnlModule[2] = {
-		new cmMaintenance(&cnlTbl[0], &cnlTbl[0], &peerTbl[0]),
-		// new cmSwitch(&cnlTbl[1], &cnlTbl[2], &peerTbl[1]),
+
+
+	/*
+	* cmSwitch requires this functions in the user sketch:
+	* void cmSwitch::initSwitch(uint8_t channel);
+	* void cmSwitch::switchSwitch(uint8_t channel, uint8_t status);
+	*/
+	const uint8_t cmMaintenance_ChnlReg[] PROGMEM = { 0x01,0x05,0x0a,0x0b,0x0c,0x12,0x14,0x23, };
+	const uint8_t cmMaintenance_ChnlDef[] PROGMEM = { 0x00,0x01,0x00,0x00,0x00,0x15,0x03,0x00, };
+	const uint8_t cmMaintenance_ChnlLen = 8;
+
+	cmMaster *pcnlModule[1] = {
+		new cmMaintenance(0),
+		// new cmSwitch(10),
 	};
+
 
 	// some forward declarations
 	extern void initTH1();
@@ -61,7 +73,7 @@
 	 *                  Other bytes not known.
 	 *                  23:0 0.4, means first four bit of byte 23 reflecting the amount of channels.
 	 */
-    const uint8_t devIdnt[] PROGMEM = {               // testID 
+    const uint8_t dev_static[] PROGMEM = {               // testID 
         /* firmwareVersion 1 byte */  0x10,           // or GE 
 		/* modelID         2 byte */  0xF2,0x01,
 		/* subTypeID       1 byte */  0x70,           // replace __ by a valid type id 
@@ -130,47 +142,6 @@
 		// channel: 6, list: 4, link to 01 04
     }; // 10 byte
 
-    /**
-     * @brief Channel - List translation table
-     * channel, list, startIndex, start address in EEprom, hidden
-     * do not edit the table, if you need more peers edit the defines accordingly.
-     */
-	#define PHY_ADDR_START 0x20
-	#define CNL_01_PEERS   6 
-
-	const s_cnlTbl cnlTbl[] = {
-		// cnl, lst, sIdx, sLen, hide, pAddr 
-		{ 0,   0,    0,    8,    0, PHY_ADDR_START },
-		{ 1,   4,    8,    2,    0, cnlTbl[0].pAddr + cnlTbl[0].sLen },
-	}; // 20 byte 
-
-	/**
-	 * @brief Peer-Device-List-Table
-	 * maximum allowed peers, link to row in cnlTbl, start address in EEprom
-	 */
-	const s_peerTbl peerTbl[] = {
-		// pMax, pLink, pAddr; 
-		{            0, 0, cnlTbl[1].pAddr + (cnlTbl[1].sLen * CNL_01_PEERS) },
-		{ CNL_01_PEERS, 1, peerTbl[0].pAddr + (peerTbl[0].pMax * 4) },
-	}; // 24 byte 	
-
-    /**
-     * @brief Struct with basic information for the AskSin library.
-     * amount of user channels, amount of lines in the channel table,
-     * link to devIdent byte array, link to cnlAddr byte array
-     */
-	//EE::s_devDef devDef = {
-	//	1, 2, devIdnt, cnlAddr,
-	//};	// 6 Byte
-
-	/**
-	 * @brief Struct with basic information for the AskSin library.
-	 * amount of user channels, amount of lines in the channel table,
-	 * link to devIdent byte array, link to cnlAddr byte array
-	 */
-	const uint8_t cnl_max = 1;
-	const uint8_t cnl_tbl_max = 2;
-
 
     /**
      * @brief Regular start function
@@ -197,21 +168,6 @@
      * of eeprom variables, or setting a default link in the peer table for 2 channels
      */
 	void firstTimeStart(void) {
-
-    #ifdef SER_DBG
-		// some debug
-		dbg << F("First time start active:\n");
-		dbg << F("cnl\tlst\tsIdx\tsLen\thide\tpAddr\n");
-		for (uint8_t i = 0; i < cnl_tbl_max; i++) {
-			// cnl, lst, sIdx, sLen, hide, pAddr
-			dbg << cnlTbl[i].cnl << "\t" << cnlTbl[i].lst << "\t" << cnlTbl[i].sIdx << "\t" << cnlTbl[i].sLen << "\t" << cnlTbl[i].vis << "\t" << cnlTbl[i].pAddr << "\n";
-		}
-    #endif
-
-		// fill register with default values, peer registers are not filled while done in usermodules
-		//hm.ee.setList(0, 0, 0, (uint8_t*)&cnlDefs[0]);
-
-		// format peer db
-		//hm.ee.clearPeers();
+		dbg << F("\nnew magic!\n\n");
 	}
 #endif

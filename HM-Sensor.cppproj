@@ -176,6 +176,7 @@
             <Value>RV_DBG</Value>
             <Value>AS_DBG</Value>
             <Value>PW_DBG</Value>
+            <Value>SERIAL_TX_BUFFER_SIZE=256</Value>
           </ListValues>
         </avrgcccpp.compiler.symbols.DefSymbols>
         <avrgcccpp.compiler.directories.IncludePaths>
@@ -208,54 +209,6 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\_Libs\Arduino\HardwareSerial.cpp">
-      <SubType>compile</SubType>
-      <Link>Arduino\HardwareSerial.cpp</Link>
-    </Compile>
-    <Compile Include="..\_Libs\Arduino\HardwareSerial.h">
-      <SubType>compile</SubType>
-      <Link>Arduino\HardwareSerial.h</Link>
-    </Compile>
-    <Compile Include="..\_Libs\Arduino\HardwareSerial0.cpp">
-      <SubType>compile</SubType>
-      <Link>Arduino\HardwareSerial0.cpp</Link>
-    </Compile>
-    <Compile Include="..\_Libs\Arduino\HardwareSerial1.cpp">
-      <SubType>compile</SubType>
-      <Link>Arduino\HardwareSerial1.cpp</Link>
-    </Compile>
-    <Compile Include="..\_Libs\Arduino\HardwareSerial2.cpp">
-      <SubType>compile</SubType>
-      <Link>Arduino\HardwareSerial2.cpp</Link>
-    </Compile>
-    <Compile Include="..\_Libs\Arduino\HardwareSerial3.cpp">
-      <SubType>compile</SubType>
-      <Link>Arduino\HardwareSerial3.cpp</Link>
-    </Compile>
-    <Compile Include="..\_Libs\Arduino\HardwareSerial_private.h">
-      <SubType>compile</SubType>
-      <Link>Arduino\HardwareSerial_private.h</Link>
-    </Compile>
-    <Compile Include="..\_Libs\Arduino\Print.cpp">
-      <SubType>compile</SubType>
-      <Link>Arduino\Print.cpp</Link>
-    </Compile>
-    <Compile Include="..\_Libs\Arduino\Print.h">
-      <SubType>compile</SubType>
-      <Link>Arduino\Print.h</Link>
-    </Compile>
-    <Compile Include="..\_Libs\Arduino\wiring.c">
-      <SubType>compile</SubType>
-      <Link>Arduino\wiring.c</Link>
-    </Compile>
-    <Compile Include="..\_Libs\Arduino\wiring_digital.c">
-      <SubType>compile</SubType>
-      <Link>Arduino\wiring_digital.c</Link>
-    </Compile>
-    <Compile Include="..\_Libs\pins_arduino.h">
-      <SubType>compile</SubType>
-      <Link>Arduino\pins_arduino.h</Link>
-    </Compile>
     <Compile Include="cppfix.h">
       <SubType>compile</SubType>
     </Compile>
@@ -417,13 +370,13 @@
       <SubType>compile</SubType>
       <Link>nas\Defines.h</Link>
     </Compile>
-    <Compile Include="NewAskSin\EEprom.cpp">
+    <Compile Include="NewAskSin\EEprom_list.cpp">
       <SubType>compile</SubType>
-      <Link>nas\EEprom.cpp</Link>
+      <Link>nas\EEprom_list.cpp</Link>
     </Compile>
-    <Compile Include="NewAskSin\EEprom.h">
+    <Compile Include="NewAskSin\eeprom_list.h">
       <SubType>compile</SubType>
-      <Link>nas\EEprom.h</Link>
+      <Link>nas\eeprom_list.h</Link>
     </Compile>
     <Compile Include="NewAskSin\EEprom_peer.cpp">
       <SubType>compile</SubType>
@@ -534,12 +487,48 @@
     <Compile Include="register.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="ZZ\HardwareSerial.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ZZ\HardwareSerial.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ZZ\HardwareSerial0.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ZZ\HardwareSerial1.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ZZ\HardwareSerial2.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ZZ\HardwareSerial3.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ZZ\HardwareSerial_private.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ZZ\pins_arduino.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ZZ\Print.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ZZ\Print.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ZZ\wiring.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ZZ\wiring_digital.c">
+      <SubType>compile</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Arduino" />
     <Folder Include="newasksin\" />
     <Folder Include="newasksin\" />
     <Folder Include="NAS" />
+    <Folder Include="ZZ" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>
