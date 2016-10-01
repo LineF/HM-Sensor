@@ -350,13 +350,13 @@
       <SubType>compile</SubType>
       <Link>nas\cmMaster.h</Link>
     </Compile>
-    <Compile Include="NewAskSin\cmSwitch.cpp">
+    <Compile Include="NewAskSin\cmTHSensWeather.cpp">
       <SubType>compile</SubType>
-      <Link>nas\cmSwitch.cpp</Link>
+      <Link>nas\cmTHSensWeather.cpp</Link>
     </Compile>
-    <Compile Include="NewAskSin\cmSwitch.h">
+    <Compile Include="NewAskSin\cmTHSensWeather.h">
       <SubType>compile</SubType>
-      <Link>nas\cmSwitch.h</Link>
+      <Link>nas\cmTHSensWeather.h</Link>
     </Compile>
     <Compile Include="NewAskSin\ConfButton.cpp">
       <SubType>compile</SubType>
@@ -457,14 +457,6 @@
     <Compile Include="NewAskSin\StatusLed.h">
       <SubType>compile</SubType>
       <Link>nas\StatusLed.h</Link>
-    </Compile>
-    <Compile Include="NewAskSin\THSensor.cpp">
-      <SubType>compile</SubType>
-      <Link>nas\THSensor.cpp</Link>
-    </Compile>
-    <Compile Include="NewAskSin\THSensor.h">
-      <SubType>compile</SubType>
-      <Link>nas\THSensor.h</Link>
     </Compile>
     <Compile Include="NewAskSin\Version.h">
       <SubType>compile</SubType>

@@ -1,5 +1,5 @@
 /*
- * HM-Sensor-Test2.cpp
+ * HM-Sensor.cpp
  *
  * Created: 27.12.2015 14:47:56
  * Author : Martin
@@ -8,7 +8,6 @@
 //- load library's --------------------------------------------------------------------------------------------------------
 #include <Arduino.h>
 #include <AS.h>																				// ask sin framework
-#include <THSensor.h>
 #include "register.h"																		// configuration sheet
 #include "dht.h"
 #include "OneWire.h"
@@ -74,22 +73,41 @@ void setup() {
 	#ifdef SER_DBG
 		DBG(SER, F("HMID: "), _HEX(dev_ident.HMID,3), F(", MAID: "), _HEX(MAID,3), F("\n\n"));	// some debug
 	#endif
-
-	while(1)
-	{
-		DBG(SER, F(".")); _delay_ms(1000);
-	}
 }
 
 
 //- user functions --------------------------------------------------------------------------------------------------------
-void initTH1() {																			// init the sensor
+void initTH(uint8_t channel) {																// init the sensor
 	
 	pinMode(DHT_PWR, OUTPUT);
 	
 	#ifdef SER_DBG
-		dbg << "init th1\n";
+		DBG(SER, F("init th: cnl: "), channel, F("\n"));
 	#endif
+}
+
+// this is called when HM wants to send measured values to peers or master
+// due to asynchronous measurement we simply can take the values very quick from variables
+void measureTH(uint8_t channel, cmTHSensWeather::s_sensVal *sensVal) {
+	int16_t t;
+	
+	#ifdef SER_DBG
+	//dbg << "msTH1 DS-t: " << celsius << ' ' << _TIME << '\n';
+	#endif
+	// take temp value from DS18B20
+	t = celsius / 10;
+	((uint8_t *)&(sensVal->temp))[0] = ((t >> 8) & 0x7F);										// battery status is added later
+	((uint8_t *)&(sensVal->temp))[1] = t & 0xFF;
+	
+	#ifdef SER_DBG
+	//dbg << "msTH1 t: " << DHT.temperature << ", h: " << DHT.humidity << ' ' << _TIME << '\n';
+	#endif
+	// take humidity value from DHT22
+	sensVal->hum = DHT.humidity / 10;
+	// fetch battery voltage
+	t = bat.getVolts();
+	((uint8_t *)&(sensVal->bat))[0] = t >> 8;
+	((uint8_t *)&(sensVal->bat))[1] = t & 0xFF;
 }
 
 void cnl0Change(void) {
@@ -134,30 +152,6 @@ void cnl0Change(void) {
 		transmitDevTryMax = 10;
 	else if (transmitDevTryMax < 1)
 		transmitDevTryMax = 1;
-}
-
-// this is called when HM wants to send measured values to peers or master
-// due to asynchronous measurement we simply can take the values very quick from variables
-void measureTH1(THSensor::s_meas *ptr) {
-	int16_t t;
-	
-	#ifdef SER_DBG
-		//dbg << "msTH1 DS-t: " << celsius << ' ' << _TIME << '\n';
-	#endif
-	// take temp value from DS18B20
-	t = celsius / 10;
-	((uint8_t *)&(ptr->temp))[0] = ((t >> 8) & 0x7F);										// battery status is added later
-	((uint8_t *)&(ptr->temp))[1] = t & 0xFF;
-	
-	#ifdef SER_DBG
-		//dbg << "msTH1 t: " << DHT.temperature << ", h: " << DHT.humidity << ' ' << _TIME << '\n';
-	#endif
-	// take humidity value from DHT22
-	ptr->hum = DHT.humidity / 10;
-	// fetch battery voltage
-	t = bat.getVolts();
-	((uint8_t *)&(ptr->bat))[0] = t >> 8;
-	((uint8_t *)&(ptr->bat))[1] = t & 0xFF;
 }
 
 // this is called regularly - real measurement is done here

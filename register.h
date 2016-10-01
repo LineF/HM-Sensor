@@ -9,7 +9,7 @@
     #include "hardware.h"
     #include "hmkey.h"
 	#include <cmMaintenance.h>
-	#include <THSensor.h>
+	#include <cmTHSensWeather.h>
 
 	// Register in Channel 0
 	#define	REG_CHN0_BURST_RX					1							// Register 1.0 / 1.0: 0=burstRx off, otherwise on
@@ -27,7 +27,6 @@
      * to be defined in the user sketch.
      */
 	AS hm;                                                                  // asksin framework
-	//THSensor thsens;                                                        // create instance of channel module
 
 
 	/*
@@ -35,19 +34,27 @@
 	* void cmSwitch::initSwitch(uint8_t channel);
 	* void cmSwitch::switchSwitch(uint8_t channel, uint8_t status);
 	*/
+	//uint8_t burstRx;         // 0x01,             startBit:0, bits:8
+	//uint8_t             :6;  // 0x05              startBit:0, bits:6
+	//uint8_t ledMode     :2;  // 0x05,             startBit:6, bits:2
+	//uint8_t pairCentral[3];  // 0x0A, 0x0B, 0x0C, startBit:0, bits:8 (3 mal)
+	//uint8_t lowBatLimit;     // 0x12,             startBit:0, bits:8
+	//uint8_t transmDevTryMax; // 0x14,             startBit:0, bits:8
+	//uint8_t osccal;          // 0x23              startBit:0, bits:8
+
 	const uint8_t cmMaintenance_ChnlReg[] PROGMEM = { 0x01,0x05,0x0a,0x0b,0x0c,0x12,0x14,0x23, };
 	const uint8_t cmMaintenance_ChnlDef[] PROGMEM = { 0x00,0x01,0x00,0x00,0x00,0x15,0x03,0x00, };
 	const uint8_t cmMaintenance_ChnlLen = 8;
 
-	cmMaster *pcnlModule[1] = {
+	cmMaster *pcnlModule[2] = {
 		new cmMaintenance(0),
-		// new cmSwitch(10),
+		new cmTHSensWeather(10),
 	};
 
 
 	// some forward declarations
-	extern void initTH1();
-	extern void measureTH1(THSensor::s_meas *);
+	//extern void initTH1();
+	//extern void measureTH1(THSensor::s_meas *);
 
 	 /*
      * @brief HMID, Serial number, HM-Default-Key, Key-Index
@@ -79,68 +86,6 @@
 		/* subTypeID       1 byte */  0x70,           // replace __ by a valid type id 
 		/* deviceInfo      3 byte */  0x01,0x01,0x00, // device info not found, replace by valid values 
     }; 
-
-
-    /**
-     * @brief Register definitions
-	 * The values are addresses in relation to the start address defines in cnlTbl
-	 * Register values can found in related Device-XML-File.
-	 *
-	 * Special register list 0: 0x0A, 0x0B, 0x0C
-	 * Special register list 1: 0x08
-	 *
-	 * @See Defines.h
-	 *
-	 * @See: cnlTbl
-	 */
-	const uint8_t cnlAddr[] PROGMEM = {
-		// channel: 0, list: 0
-		0x01,0x05,0x0a,0x0b,0x0c,0x12,0x14,0x23,
-		// channel: 1, list: 1
-		//0x08,
-		// channel: 1, list: 4
-		0x01,0x02,
-	};  // 10 byte
-	// List 0: 0x01, 0x05, 0x0A, 0x0B, 0x0C, 0x12, 0x14, 0x23
-	//uint8_t burstRx;         // 0x01,             startBit:0, bits:8
-	//uint8_t             :6;  // 0x05              startBit:0, bits:6
-	//uint8_t ledMode     :2;  // 0x05,             startBit:6, bits:2
-	//uint8_t pairCentral[3];  // 0x0A, 0x0B, 0x0C, startBit:0, bits:8 (3 mal)
-	//uint8_t lowBatLimit;     // 0x12,             startBit:0, bits:8
-	//uint8_t transmDevTryMax; // 0x14,             startBit:0, bits:8
-	//uint8_t osccal;          // 0x23              startBit:0, bits:8
-
-	// List 4: 0x01,0x02,
-	//uint8_t  peerNeedsBurst:1; // 0x01, s:0, e:1
-	//uint8_t  useDHTTemp    :1; // 0x01, s:1, e:1
-	//uint8_t                :6; //
-	//uint8_t  tempCorr          // 0x02, max +/- 12,7°C (1/10°C)
-
-
-    /**
-     * @brief Channel, List defaults
-     * Source of the default values is the respective xml file.
-	 * This values are the defined default values and should be set
-	 * in the first start function.
-	 */
-    const uint8_t cnlDefs[] PROGMEM = {
-        // channel: 0, list: 0
-        0x00,0x40,0x00,0x00,0x00,0x15,0x03,0x00,
-		// channel: 1, list: 1
-		//0x10,0x00,0x00,
-		// channel: 1, list: 4
-		0x00,0x00,
-		// channel: 2, list: 1, link to 01 01
-		// channel: 2, list: 4, link to 01 04
-		// channel: 3, list: 1, link to 01 01
-		// channel: 3, list: 4, link to 01 04
-		// channel: 4, list: 1, link to 01 01
-		// channel: 4, list: 4, link to 01 04
-		// channel: 5, list: 1, link to 01 01
-		// channel: 5, list: 4, link to 01 04
-		// channel: 6, list: 1, link to 01 01
-		// channel: 6, list: 4, link to 01 04
-    }; // 10 byte
 
 
     /**
