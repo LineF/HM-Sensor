@@ -43,7 +43,7 @@
 	//uint8_t osccal;          // 0x23              startBit:0, bits:8
 
 	const uint8_t cmMaintenance_ChnlReg[] PROGMEM = { 0x01,0x05,0x0a,0x0b,0x0c,0x12,0x14,0x23, };
-	const uint8_t cmMaintenance_ChnlDef[] PROGMEM = { 0x00,0x01,0x00,0x00,0x00,0x15,0x03,0x00, };
+	const uint8_t cmMaintenance_ChnlDef[] PROGMEM = { 0x00,0x40,0x00,0x00,0x00,0x15,0x03,0x00, };
 	const uint8_t cmMaintenance_ChnlLen = 8;
 
 	cmMaster *pcnlModule[2] = {
@@ -51,10 +51,6 @@
 		new cmTHSensWeather(10),
 	};
 
-
-	// some forward declarations
-	//extern void initTH1();
-	//extern void measureTH1(THSensor::s_meas *);
 
 	 /*
      * @brief HMID, Serial number, HM-Default-Key, Key-Index
@@ -94,15 +90,9 @@
      * here we can setup everything which is needed for a proper device operation
      */
 	void everyTimeStart(void) {
-		
-        // channel 0 section 
 		led.set(welcome);
 		btn.config(1);
 		cnl0Change();														// initialize with values from eeprom
-
-		// channel 1 section 
-		//thsens.regInHM(1, 4);													// register sensor module on channel 1, with a list4 and introduce asksin instance
-		//thsens.config(&initTH1, &measureTH1);								// configure the user class and handover addresses to respective functions and variables
 	}
 
     /**

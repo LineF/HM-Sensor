@@ -11,7 +11,7 @@
 #include "register.h"																		// configuration sheet
 #include "dht.h"
 #include "OneWire.h"
-#include "cppfix.h"
+//#include "cppfix.h"
 #include <avr/wdt.h>
 
 //#define SER_DBG
@@ -47,9 +47,6 @@ void setup() {
 	ADCSRA = 0;																				// ADC off
 	power_all_disable();																	// and everything else
 	
-	DDRB = DDRC = DDRD = 0x00;																// everything as input
-	PORTB = PORTC = PORTD = 0x00;															// pullup's off
-
 	// todo: timer0 and SPI should enable internally
 	power_timer0_enable();
 	power_spi_enable();																		// enable only needed functions
@@ -58,10 +55,10 @@ void setup() {
 	// enable only what is really needed
 
 	#ifdef SER_DBG																			// some debug
-		DBG_START(SER, F("\nSER.\n") );														// ...some debug
+		DBG_START(SER, F("SER.\n") );														// ...some debug
 
 		//dbgStart();																		// serial setup
-		DBG(SER, F("HB_UW_Sen_TH_Pn\n"));
+		DBG(SER, F("\nHB_UW_Sen_TH_Pn\n"));
 		DBG(SER, F(LIB_VERSION_STRING));													// ...and some information
 	#endif
 	
@@ -92,15 +89,15 @@ void measureTH(uint8_t channel, cmTHSensWeather::s_sensVal *sensVal) {
 	int16_t t;
 	
 	#ifdef SER_DBG
-	//dbg << "msTH1 DS-t: " << celsius << ' ' << _TIME << '\n';
+		//dbg << "msTH DS-t: " << celsius << ' ' << _TIME << '\n';
 	#endif
 	// take temp value from DS18B20
 	t = celsius / 10;
-	((uint8_t *)&(sensVal->temp))[0] = ((t >> 8) & 0x7F);										// battery status is added later
+	((uint8_t *)&(sensVal->temp))[0] = ((t >> 8) & 0x7F);									// battery status is added later
 	((uint8_t *)&(sensVal->temp))[1] = t & 0xFF;
 	
 	#ifdef SER_DBG
-	//dbg << "msTH1 t: " << DHT.temperature << ", h: " << DHT.humidity << ' ' << _TIME << '\n';
+		//dbg << "msTH t: " << DHT.temperature << ", h: " << DHT.humidity << ' ' << _TIME << '\n';
 	#endif
 	// take humidity value from DHT22
 	sensVal->hum = DHT.humidity / 10;
@@ -142,9 +139,11 @@ void cnl0Change(void) {
 		pom.setMode(POWER_MODE_WAKEUP_ONRADIO);											// set mode to wakeup on burst
 	} else {	// no burstRx wanted
 		#ifdef SER_DBG
-			dbg << F("PM=8000ms\n");
+			//dbg << F("PM=8000ms\n");
+			dbg << F("PM: no sleep\n");
 		#endif
-			pom.setMode(POWER_MODE_WAKEUP_8000MS);										// set mode to awake every 8 secs
+			//pom.setMode(POWER_MODE_WAKEUP_8000MS);										// set mode to awake every 8 secs
+			pom.setMode(POWER_MODE_NO_SLEEP);
 	}
 
 	// fetch transmitDevTryMax
