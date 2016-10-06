@@ -77,7 +77,7 @@
 	 *                  23:0 0.4, means first four bit of byte 23 reflecting the amount of channels.
 	 */
     const uint8_t dev_static[] PROGMEM = {               // testID 
-        /* firmwareVersion 1 byte */  0x10,           // or GE 
+        /* firmwareVersion 1 byte */  0x15,           // or GE 
 		/* modelID         2 byte */  0xF2,0x01,
 		/* subTypeID       1 byte */  0x70,           // replace __ by a valid type id 
 		/* deviceInfo      3 byte */  0x01,0x01,0x00, // device info not found, replace by valid values 
