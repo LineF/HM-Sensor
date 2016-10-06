@@ -213,9 +213,6 @@
       <SubType>compile</SubType>
       <Link>cppfix.cpp</Link>
     </Compile>
-    <Compile Include="cppfix.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="dht.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -382,14 +379,6 @@
       <SubType>compile</SubType>
       <Link>nas\eeprom_list.h</Link>
     </Compile>
-    <Compile Include="NewAskSin\EEprom_peer.cpp">
-      <SubType>compile</SubType>
-      <Link>nas\EEprom_peer.cpp</Link>
-    </Compile>
-    <Compile Include="NewAskSin\eeprom_peer.h">
-      <SubType>compile</SubType>
-      <Link>nas\eeprom_peer.h</Link>
-    </Compile>
     <Compile Include="NewAskSin\gf256mul.h">
       <SubType>compile</SubType>
       <Link>nas\gf256mul.h</Link>
@@ -521,7 +510,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="newasksin\" />
     <Folder Include="newasksin\" />
     <Folder Include="NAS" />
     <Folder Include="ZZ" />
