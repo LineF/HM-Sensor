@@ -46,7 +46,7 @@
 	const uint8_t cmMaintenance_ChnlDef[] PROGMEM = { 0x00,0x40,0x00,0x00,0x00,0x15,0x03,0x00, };
 	const uint8_t cmMaintenance_ChnlLen = 8;
 
-	cmMaster *pcnlModule[2] = {
+	cmMaster *ptr_CM[2] = {
 		new cmMaintenance(0),
 		new cmTHSensWeather(10),
 	};
