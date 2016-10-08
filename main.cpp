@@ -29,6 +29,8 @@ int16_t celsius;
 uint8_t transmitDevTryMax;
 
 void serialEvent();
+void dumpEEprom();
+
 
 
 //- arduino functions -----------------------------------------------------------------------------------------------------
@@ -227,33 +229,97 @@ int main(void)
 			hm.poll();																		// poll the homematic main loop
 
 			// - user related -----------------------------------------
+#ifdef SER_DBG
 			serialEvent();
+#endif
 			measure();
     }
 }
 
 
 //- predefined functions --------------------------------------------------------------------------------------------------
+#ifdef SER_DBG
+/*
+* @brief Serial debug function to enter byte strings in the serial console.
+*        They are forwarded to the send/receive function and processed like
+*		 the cc1101 buffer
+*/
 void serialEvent() {
-	#ifdef SER_DBG
-	
-	static uint8_t i = 0;																	// it is a high byte next time
+
+	static uint8_t i = 0;																		// it is a high byte next time
 	while (Serial.available()) {
-		uint8_t inChar = (uint8_t)Serial.read();											// read a byte
-		if (inChar == '\n') {																// send to receive routine
+
+		uint8_t inChar = (uint8_t)Serial.read();												// read a byte
+
+		if (inChar == 'x') {
+			dumpEEprom();
 			i = 0;
+			return;
+		} else if (inChar == 's') {
+			DBG(SER, F("con: "), _HEX(snd_msg.buf, snd_msg.buf[0]+1), '\n');
+			snd_msg.temp_max_retr = 1;
 			snd_msg.active = 1;
+			i = 0;
+			return;
 		}
-		
-		if      ((inChar>96) && (inChar<103)) inChar-=87;									// a - f
-		else if ((inChar>64) && (inChar<71))  inChar-=55;									// A - F
-		else if ((inChar>47) && (inChar<58))  inChar-=48;									// 0 - 9
+
+		if ((inChar>96) && (inChar<103)) inChar -= 87;											// a - f
+		else if ((inChar>64) && (inChar<71))  inChar -= 55;										// A - F
+		else if ((inChar>47) && (inChar<58))  inChar -= 48;										// 0 - 9
 		else continue;
-		
-		if (i % 2 == 0) snd_msg.buf[i/2] = inChar << 4;										// high byte
-		else snd_msg.buf[i/2] |= inChar;														// low byte
-		
+
+		if (i % 2 == 0) snd_msg.buf[i / 2] = inChar << 4;											// high byte
+		else snd_msg.buf[i / 2] |= inChar;															// low byte
+
 		i++;
 	}
-	#endif
 }
+
+void dumpEEprom() {
+	uint16_t pAddr;
+
+	DBG(SER, F("\nEEPROM content\n\n"));
+	uint8_t *e = new uint8_t[32];
+	getEEPromBlock(0, 32, e);
+	DBG(SER, F("Magic:"), _HEX(e, 2), F("("), *(uint16_t*)e, F("), HMID:"), _HEX(e+2,3), F(", SERIAL:"), _HEX(e+5, 10), F("\nKEY_IDX:"), _HEX(e + 15, 1), F(", KEY:"), _HEX(e + 16, 16), F("\n\n"));
+
+	for (uint8_t i = 0; i < cnl_max; i++) {														// stepping through channels
+
+		for (uint8_t j = 0; j < 5; j++) {														// stepping through available lists
+			s_list_table *list = ptr_CM[i]->list[j];											// short hand to list table
+			s_peer_table *peer = &ptr_CM[i]->peerDB;											// short hand to peer db
+			if (!list) continue;																// skip if pointer is empty
+
+			uint8_t *x = new uint8_t[list->len];												// size an array as data buffer
+			DBG(SER, F("cnl:"), _HEXB(list->cnl), F(", lst:"), _HEXB(list->lst), F(", sLen:"), _HEXB(list->len), F(", pAddr:"), list->ee_addr, '\n');
+
+			memcpy_P(x, list->reg, list->len);
+			DBG(SER, F("register:  "), _HEX(x, list->len), '\n');
+			memcpy_P(x, list->def, list->len);
+			DBG(SER, F("default:   "), _HEX(x, list->len), '\n');
+
+			if (j == 3 || j == 4) {
+				DBG(SER, F("cmModul:\n"));
+				for (uint8_t k = 0; k < peer->max; k++) {
+					uint8_t *p = peer->get_peer(k);												// process peer
+					DBG(SER, F("peer   "), _HEXB(k), F(": "), _HEX(p, 4), F(" ("), peer->ee_addr + (k * 4), F(")\n"));
+					pAddr = list->ee_addr + (k * list->len);									// process list
+					getEEPromBlock(pAddr, list->len, x);
+					DBG(SER, F("eeprom "), _HEXB(k), F(": "), _HEX(x, list->len), F(" ("), pAddr, F(")\n"));
+				}
+
+				} else {
+				DBG(SER, F("cmModul:   "), _HEX(list->val, list->len), '\n');
+				getEEPromBlock(list->ee_addr, list->len, x);
+				DBG(SER, F("eeprom:    "), _HEX(x, list->len), '\n');
+
+			}
+			delete x;
+			DBG(SER, '\n');
+		}
+	}
+}
+
+
+
+#endif
