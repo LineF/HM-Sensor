@@ -112,11 +112,9 @@ void cnl0Change(void) {
 	
 	// set lowBat threshold
 	bat.set(*ptr_CM[0]->list[0]->ptr_to_val(REG_CHN0_LOW_BAT_LIMIT_TH)*10, BATTERY_MEAS_INTERVAL);
-	//bat.set(ee_list.getRegAddr(0,0,0,REG_CHN0_LOW_BAT_LIMIT_TH)*10, BATTERY_MEAS_INTERVAL);
 
 	// set OSCCAL frequency
 	if (uint8_t oscCal = *ptr_CM[0]->list[0]->ptr_to_val(REG_CHN0_OSCCAL)) {
-	//if (uint8_t oscCal = ee_list.getRegAddr(0,0,0,REG_CHN0_OSCCAL)) {
 	#ifdef SER_DBG
 		dbg << F("will set OSCCAL: old=") << OSCCAL << F(", new=") << oscCal << F("\n");
 	#endif
@@ -125,7 +123,7 @@ void cnl0Change(void) {
 		// my chip: 1kHz - 8A=994Hz, 8B=998,4Hz, 8C=1001,6Hz, 8E=1010Hz
 		// frequency measured with help of millis-ISR (toggling LED port and measuring frequency on it)
 
-		//OSCCAL = oscCal;
+		OSCCAL = oscCal;
 	} else {
 	#ifdef SER_DBG
 		dbg << F("will set default OSCCAL: ") << getDefaultOSCCAL() << F("\n");
@@ -136,11 +134,11 @@ void cnl0Change(void) {
 
 	// if burstRx is set ...
 	if (*ptr_CM[0]->list[0]->ptr_to_val(REG_CHN0_BURST_RX)) {
-	//if (ee_list.getRegAddr(0,0,0,REG_CHN0_BURST_RX)) {
 	#ifdef SER_DBG
-		dbg << F("PM=onradio\n");
+		//dbg << F("PM=onradio\n");
+		dbg << F("[PM=onradio]\n");
 	#endif
-		pom.setMode(POWER_MODE_WAKEUP_ONRADIO);											// set mode to wakeup on burst
+		//pom.setMode(POWER_MODE_WAKEUP_ONRADIO);											// set mode to wakeup on burst
 	} else {	// no burstRx wanted
 		#ifdef SER_DBG
 			//dbg << F("PM=8000ms\n");
@@ -152,7 +150,6 @@ void cnl0Change(void) {
 
 	// fetch transmitDevTryMax
 	if ((transmitDevTryMax = *ptr_CM[0]->list[0]->ptr_to_val(REG_CHN0_TRANS_DEV_TRY_MAX)) > 10)
-	//if ((transmitDevTryMax = ee_list.getRegAddr(0,0,0,REG_CHN0_TRANS_DEV_TRY_MAX)) > 10)
 		transmitDevTryMax = 10;
 	else if (transmitDevTryMax < 1)
 		transmitDevTryMax = 1;
