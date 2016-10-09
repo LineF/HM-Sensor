@@ -92,7 +92,7 @@
 	void everyTimeStart(void) {
 		led.set(welcome);
 		btn.config(1);
-		cnl0Change();														// initialize with values from eeprom
+		//cnl0Change();														// initialize with values from eeprom
 	}
 
     /**

@@ -315,6 +315,7 @@ void dumpEEprom() {
 			DBG(SER, '\n');
 		}
 	}
+	delete e;
 }
 
 
