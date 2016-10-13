@@ -48,7 +48,13 @@ void setup() {
 	PORTB = PORTC = PORTD = 0x00;															// pullup's off
 
 	// todo: timer0 and SPI should enable internally
-	power_timer0_enable();
+	#ifdef LOW_FREQ_OSC
+		power_timer2_enable();
+		ASSR |= (1<<AS2);																	// enable async Timer/Counter 2
+		_delay_ms(1000);																	// wait for clean osc startup
+	#else
+		power_timer0_enable();
+	#endif
 	power_spi_enable();																		// enable only needed functions
 
 
@@ -62,6 +68,7 @@ void setup() {
 	
 	// - AskSin related ---------------------------------------
 	hm.init();																				// init the asksin framework
+	startTimer1ms();
 	sei();																					// enable interrupts
 
 	// - user related -----------------------------------------
@@ -103,7 +110,9 @@ void cnl0Change(void) {
 	#endif
 		OSCCAL = getDefaultOSCCAL();
 	}
-	calibrateWatchdog();
+	#ifndef LOW_FREQ_OSC
+		calibrateWatchdog();
+	#endif
 
 	// if burstRx is set ...
 	if (hm.ee.getRegAddr(0,0,0,REG_CHN0_BURST_RX)) {
@@ -115,7 +124,8 @@ void cnl0Change(void) {
 		#ifdef SER_DBG
 			dbg << F("PM=250ms\n");
 		#endif
-			hm.pw.setMode(POWER_MODE_WAKEUP_250MS);										// set mode to awake every 8 secs
+			//hm.pw.setMode(POWER_MODE_WAKEUP_250MS);										// set mode to awake every 8 secs
+			hm.pw.setMode(POWER_MODE_NO_SLEEP)		;										// set mode to awake every 8 secs
 	}
 
 	// fetch transmitDevTryMax

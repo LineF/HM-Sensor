@@ -171,7 +171,6 @@
       <Value>F_CPU=8000000</Value>
       <Value>DEBUG</Value>
       <Value>SER_DBG</Value>
-      <Value>EE_DBG</Value>
       <Value>SN_DBG</Value>
       <Value>RV_DBG</Value>
       <Value>AS_DBG</Value>

@@ -6,8 +6,6 @@
 //- with a lot of support from martin876 at FHEM forum
 //- -------------------------------------------------------------------------------------------------------------------
 
-#include <HAL.h>
-
 #ifndef _HARDWARE_h
 	#define _HARDWARE_h
 
@@ -15,6 +13,7 @@
 	#define BATTERY_FACTOR             18										// see excel table
 	#define BATTERY_MEAS_INTERVAL      3600000									// Battery measurment interval in msec
 	#define DEBOUNCE                   5
+	#define LOW_FREQ_OSC														// define to use ext. 32kHz crystal for low frequency oscillator
 
 	#if defined(__AVR_ATmega328P__)
 		//- hardware specific general setup

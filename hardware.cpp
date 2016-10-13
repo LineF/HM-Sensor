@@ -7,6 +7,7 @@
 //- -------------------------------------------------------------------------------------------------------------------
 
 #include "hardware.h"
+#include <HAL.h>
 #include <HAL_extern.h>
 
 void    initWakeupPin(void) {
