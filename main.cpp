@@ -68,7 +68,6 @@ void setup() {
 	
 	// - AskSin related ---------------------------------------
 	hm.init();																				// init the asksin framework
-	startTimer1ms();
 	sei();																					// enable interrupts
 
 	// - user related -----------------------------------------
@@ -124,8 +123,8 @@ void cnl0Change(void) {
 		#ifdef SER_DBG
 			dbg << F("PM=250ms\n");
 		#endif
-			//hm.pw.setMode(POWER_MODE_WAKEUP_250MS);										// set mode to awake every 8 secs
-			hm.pw.setMode(POWER_MODE_NO_SLEEP)		;										// set mode to awake every 8 secs
+			// todo: set 8000ms if no peers attached
+			hm.pw.setMode(POWER_MODE_WAKEUP_250MS);											// set mode to awake every 8 secs
 	}
 
 	// fetch transmitDevTryMax
