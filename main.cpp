@@ -140,7 +140,7 @@ void measureTH1(THSensor::s_meas *ptr) {
 	int16_t t;
 	
 	#ifdef SER_DBG
-		//dbg << "msTH1 DS-t: " << celsius << ' ' << _TIME << '\n';
+		dbg << "msTH1 DS-t: " << celsius << ' ' << _TIME << '\n';
 	#endif
 	// take temp value from DS18B20
 	t = celsius / 10;
@@ -148,7 +148,7 @@ void measureTH1(THSensor::s_meas *ptr) {
 	((uint8_t *)&(ptr->temp))[1] = t & 0xFF;
 	
 	#ifdef SER_DBG
-		//dbg << "msTH1 t: " << DHT.temperature << ", h: " << DHT.humidity << ' ' << _TIME << '\n';
+		dbg << "msTH1 t: " << DHT.temperature << ", h: " << DHT.humidity << ' ' << _TIME << '\n';
 	#endif
 	// take humidity value from DHT22
 	ptr->hum = DHT.humidity / 10;
