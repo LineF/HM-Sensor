@@ -9851,8 +9851,8 @@ body 3x3mm, pitch 1mm</description>
 <attributes>
 </attributes>
 <variantdefs>
-<variantdef name="DHT-22"/>
-<variantdef name="SHT-11"/>
+<variantdef name="DHT-22" current="yes"/>
+<variantdef name="SHT-21"/>
 </variantdefs>
 <classes>
 <class number="0" name="default" width="0" drill="0">
@@ -9893,7 +9893,7 @@ body 3x3mm, pitch 1mm</description>
 <part name="S1" library="switch-omron" deviceset="10-XX" device=""/>
 <part name="GND9" library="supply1" deviceset="GND" device=""/>
 <part name="IC3" library="Pn-Lib" deviceset="DHT-22" device="">
-<variant name="SHT-11" populate="no"/>
+<variant name="SHT-21" populate="no"/>
 </part>
 <part name="GND10" library="supply1" deviceset="GND" device=""/>
 <part name="+3V7" library="supply1" deviceset="+3V3" device=""/>
@@ -9908,12 +9908,17 @@ body 3x3mm, pitch 1mm</description>
 <part name="SJ2" library="jumper" deviceset="SJ" device=""/>
 <part name="GND14" library="supply1" deviceset="GND" device=""/>
 <part name="Q1" library="kanflo" deviceset="OSCILLATOR_32KHZ" device="" value="32,768KHz"/>
-<part name="C6" library="rcl" deviceset="C-EU" device="C0603K" value="22pF"/>
-<part name="C7" library="rcl" deviceset="C-EU" device="C0603K" value="22pF"/>
+<part name="C6" library="rcl" deviceset="C-EU" device="C0603K" value="10pF">
+<variant name="DHT-22" populate="no"/>
+<variant name="SHT-21" populate="no"/>
+</part>
+<part name="C7" library="rcl" deviceset="C-EU" device="C0603K" value="10pF"/>
 <part name="+3V4" library="supply1" deviceset="+3V3" device=""/>
 <part name="GND15" library="supply1" deviceset="GND" device=""/>
 <part name="GND16" library="supply1" deviceset="GND" device=""/>
-<part name="IC4" library="sensirion" deviceset="SHT21" device=""/>
+<part name="IC4" library="sensirion" deviceset="SHT21" device="">
+<variant name="DHT-22" populate="no"/>
+</part>
 <part name="C8" library="rcl" deviceset="C-EU" device="C0603K" value="100nF"/>
 </parts>
 <sheets>
