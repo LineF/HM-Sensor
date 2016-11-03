@@ -171,8 +171,11 @@
       <Value>F_CPU=8000000</Value>
       <Value>DEBUG</Value>
       <Value>SER_DBG</Value>
+      <Value>EE_DBG</Value>
       <Value>SN_DBG</Value>
       <Value>RV_DBG</Value>
+      <Value>PW_DBG</Value>
+      <Value>TH_DBG</Value>
       <Value>AS_DBG</Value>
     </ListValues>
   </avrgcccpp.compiler.symbols.DefSymbols>
@@ -206,53 +209,9 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\_Libs\Arduino\HardwareSerial.cpp">
+    <Compile Include="cppfix.cpp">
       <SubType>compile</SubType>
-      <Link>Arduino\HardwareSerial.cpp</Link>
-    </Compile>
-    <Compile Include="..\_Libs\Arduino\HardwareSerial.h">
-      <SubType>compile</SubType>
-      <Link>Arduino\HardwareSerial.h</Link>
-    </Compile>
-    <Compile Include="..\_Libs\Arduino\HardwareSerial0.cpp">
-      <SubType>compile</SubType>
-      <Link>Arduino\HardwareSerial0.cpp</Link>
-    </Compile>
-    <Compile Include="..\_Libs\Arduino\HardwareSerial1.cpp">
-      <SubType>compile</SubType>
-      <Link>Arduino\HardwareSerial1.cpp</Link>
-    </Compile>
-    <Compile Include="..\_Libs\Arduino\HardwareSerial2.cpp">
-      <SubType>compile</SubType>
-      <Link>Arduino\HardwareSerial2.cpp</Link>
-    </Compile>
-    <Compile Include="..\_Libs\Arduino\HardwareSerial3.cpp">
-      <SubType>compile</SubType>
-      <Link>Arduino\HardwareSerial3.cpp</Link>
-    </Compile>
-    <Compile Include="..\_Libs\Arduino\HardwareSerial_private.h">
-      <SubType>compile</SubType>
-      <Link>Arduino\HardwareSerial_private.h</Link>
-    </Compile>
-    <Compile Include="..\_Libs\Arduino\Print.cpp">
-      <SubType>compile</SubType>
-      <Link>Arduino\Print.cpp</Link>
-    </Compile>
-    <Compile Include="..\_Libs\Arduino\Print.h">
-      <SubType>compile</SubType>
-      <Link>Arduino\Print.h</Link>
-    </Compile>
-    <Compile Include="..\_Libs\Arduino\wiring.c">
-      <SubType>compile</SubType>
-      <Link>Arduino\wiring.c</Link>
-    </Compile>
-    <Compile Include="..\_Libs\Arduino\wiring_digital.c">
-      <SubType>compile</SubType>
-      <Link>Arduino\wiring_digital.c</Link>
-    </Compile>
-    <Compile Include="..\_Libs\pins_arduino.h">
-      <SubType>compile</SubType>
-      <Link>Arduino\pins_arduino.h</Link>
+      <Link>cppfix.cpp</Link>
     </Compile>
     <Compile Include="dht.cpp">
       <SubType>compile</SubType>
@@ -271,6 +230,10 @@
     </Compile>
     <Compile Include="main.cpp">
       <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="NewAskSin\00_debug-flag.h">
+      <SubType>compile</SubType>
+      <Link>nas\00_debug-flag.h</Link>
     </Compile>
     <Compile Include="NewAskSin\aes.h">
       <SubType>compile</SubType>
@@ -344,6 +307,10 @@
       <SubType>compile</SubType>
       <Link>nas\AS.h</Link>
     </Compile>
+    <Compile Include="NewAskSin\AS_typedefs.h">
+      <SubType>compile</SubType>
+      <Link>nas\AS_typedefs.h</Link>
+    </Compile>
     <Compile Include="NewAskSin\Battery.cpp">
       <SubType>compile</SubType>
       <Link>nas\Battery.cpp</Link>
@@ -368,45 +335,29 @@
       <SubType>compile</SubType>
       <Link>nas\cm.h</Link>
     </Compile>
-    <Compile Include="NewAskSin\cmBlind.cpp">
+    <Compile Include="NewAskSin\cmMaintenance.cpp">
       <SubType>compile</SubType>
-      <Link>nas\cmBlind.cpp</Link>
+      <Link>nas\cmMaintenance.cpp</Link>
     </Compile>
-    <Compile Include="NewAskSin\cmBlind.h">
+    <Compile Include="NewAskSin\cmMaintenance.h">
       <SubType>compile</SubType>
-      <Link>nas\cmBlind.h</Link>
+      <Link>nas\cmMaintenance.h</Link>
     </Compile>
-    <Compile Include="NewAskSin\cmDimmer.cpp">
+    <Compile Include="NewAskSin\cmMaster.cpp">
       <SubType>compile</SubType>
-      <Link>nas\cmDimmer.cpp</Link>
+      <Link>nas\cmMaster.cpp</Link>
     </Compile>
-    <Compile Include="NewAskSin\cmDimmer.h">
+    <Compile Include="NewAskSin\cmMaster.h">
       <SubType>compile</SubType>
-      <Link>nas\cmDimmer.h</Link>
+      <Link>nas\cmMaster.h</Link>
     </Compile>
-    <Compile Include="NewAskSin\cmPowerSens.cpp">
+    <Compile Include="NewAskSin\cmTHSensWeather.cpp">
       <SubType>compile</SubType>
-      <Link>nas\cmPowerSens.cpp</Link>
+      <Link>nas\cmTHSensWeather.cpp</Link>
     </Compile>
-    <Compile Include="NewAskSin\cmPowerSens.h">
+    <Compile Include="NewAskSin\cmTHSensWeather.h">
       <SubType>compile</SubType>
-      <Link>nas\cmPowerSens.h</Link>
-    </Compile>
-    <Compile Include="NewAskSin\cmRemote.cpp">
-      <SubType>compile</SubType>
-      <Link>nas\cmRemote.cpp</Link>
-    </Compile>
-    <Compile Include="NewAskSin\cmRemote.h">
-      <SubType>compile</SubType>
-      <Link>nas\cmRemote.h</Link>
-    </Compile>
-    <Compile Include="NewAskSin\cmSwitch.cpp">
-      <SubType>compile</SubType>
-      <Link>nas\cmSwitch.cpp</Link>
-    </Compile>
-    <Compile Include="NewAskSin\cmSwitch.h">
-      <SubType>compile</SubType>
-      <Link>nas\cmSwitch.h</Link>
+      <Link>nas\cmTHSensWeather.h</Link>
     </Compile>
     <Compile Include="NewAskSin\ConfButton.cpp">
       <SubType>compile</SubType>
@@ -419,18 +370,6 @@
     <Compile Include="NewAskSin\Defines.h">
       <SubType>compile</SubType>
       <Link>nas\Defines.h</Link>
-    </Compile>
-    <Compile Include="NewAskSin\EEprom.cpp">
-      <SubType>compile</SubType>
-      <Link>nas\EEprom.cpp</Link>
-    </Compile>
-    <Compile Include="NewAskSin\EEprom.h">
-      <SubType>compile</SubType>
-      <Link>nas\EEprom.h</Link>
-    </Compile>
-    <Compile Include="NewAskSin\Fastdelegate.h">
-      <SubType>compile</SubType>
-      <Link>nas\Fastdelegate.h</Link>
     </Compile>
     <Compile Include="NewAskSin\gf256mul.h">
       <SubType>compile</SubType>
@@ -488,14 +427,6 @@
       <SubType>compile</SubType>
       <Link>nas\Receive.h</Link>
     </Compile>
-    <Compile Include="NewAskSin\Registrar.cpp">
-      <SubType>compile</SubType>
-      <Link>nas\Registrar.cpp</Link>
-    </Compile>
-    <Compile Include="NewAskSin\Registrar.h">
-      <SubType>compile</SubType>
-      <Link>nas\Registrar.h</Link>
-    </Compile>
     <Compile Include="NewAskSin\Send.cpp">
       <SubType>compile</SubType>
       <Link>nas\Send.cpp</Link>
@@ -512,17 +443,17 @@
       <SubType>compile</SubType>
       <Link>nas\StatusLed.h</Link>
     </Compile>
-    <Compile Include="NewAskSin\THSensor.cpp">
-      <SubType>compile</SubType>
-      <Link>nas\THSensor.cpp</Link>
-    </Compile>
-    <Compile Include="NewAskSin\THSensor.h">
-      <SubType>compile</SubType>
-      <Link>nas\THSensor.h</Link>
-    </Compile>
     <Compile Include="NewAskSin\Version.h">
       <SubType>compile</SubType>
       <Link>nas\Version.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\wait_timer.cpp">
+      <SubType>compile</SubType>
+      <Link>nas\wait_timer.cpp</Link>
+    </Compile>
+    <Compile Include="NewAskSin\wait_timer.h">
+      <SubType>compile</SubType>
+      <Link>nas\wait_timer.h</Link>
     </Compile>
     <Compile Include="OneWire.cpp">
       <SubType>compile</SubType>
@@ -533,12 +464,47 @@
     <Compile Include="register.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="ZZ\HardwareSerial.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ZZ\HardwareSerial.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ZZ\HardwareSerial0.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ZZ\HardwareSerial1.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ZZ\HardwareSerial2.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ZZ\HardwareSerial3.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ZZ\HardwareSerial_private.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ZZ\pins_arduino.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ZZ\Print.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ZZ\Print.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ZZ\wiring.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ZZ\wiring_digital.c">
+      <SubType>compile</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Arduino" />
-    <Folder Include="newasksin\" />
     <Folder Include="newasksin\" />
     <Folder Include="NAS" />
+    <Folder Include="ZZ" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>

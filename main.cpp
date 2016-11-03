@@ -1,5 +1,5 @@
 /*
- * HM-Sensor-Test2.cpp
+ * HM-Sensor.cpp
  *
  * Created: 27.12.2015 14:47:56
  * Author : Martin
@@ -7,8 +7,7 @@
 
 //- load library's --------------------------------------------------------------------------------------------------------
 #include <Arduino.h>
-#include <AS.h>																				// ask sin framework
-#include <THSensor.h>
+#include "AS.h"																				// ask sin framework
 #include "register.h"																		// configuration sheet
 #include "dht.h"
 #include "OneWire.h"
@@ -20,6 +19,9 @@
 #define DHT_PIN		6																		// this pin DHT22 is connected to
 #define OW_PIN		5																		// this pin DS18B20 is connected to
 
+#include "00_debug-flag.h"
+
+
 dht DHT;
 OneWire OW(OW_PIN);
 waitTimer thTimer;
@@ -27,6 +29,8 @@ int16_t celsius;
 uint8_t transmitDevTryMax;
 
 void serialEvent();
+void dumpEEprom();
+
 
 
 //- arduino functions -----------------------------------------------------------------------------------------------------
@@ -44,9 +48,6 @@ void setup() {
 	ADCSRA = 0;																				// ADC off
 	power_all_disable();																	// and everything else
 	
-	DDRB = DDRC = DDRD = 0x00;																// everything as input
-	PORTB = PORTC = PORTD = 0x00;															// pullup's off
-
 	// todo: timer0 and SPI should enable internally
 	#ifdef LOW_FREQ_OSC
 		power_timer2_enable();
@@ -61,9 +62,11 @@ void setup() {
 	// enable only what is really needed
 
 	#ifdef SER_DBG																			// some debug
-		dbgStart();																			// serial setup
-		dbg << F("HB_UW_Sen_TH_Pn\n");
-		dbg << F(LIB_VERSION_STRING);														// ...and some information
+		DBG_START(SER, F("SER.\n") );														// ...some debug
+
+		//dbgStart();																		// serial setup
+		DBG(SER, F("\nHB_UW_Sen_TH_Pn\n"));
+		DBG(SER, F(LIB_VERSION_STRING));													// ...and some information
 	#endif
 	
 	// - AskSin related ---------------------------------------
@@ -72,28 +75,52 @@ void setup() {
 
 	// - user related -----------------------------------------
 	#ifdef SER_DBG
-		dbg << F("HMID: ") << _HEX(HMID,3) << F(", MAID: ") << _HEX(MAID,3) << F("\n\n");	// some debug
+		DBG(SER, F("HMID: "), _HEX(dev_ident.HMID,3), F(", MAID: "), _HEX(MAID,3), F("\n\n"));	// some debug
 	#endif
 }
 
 
 //- user functions --------------------------------------------------------------------------------------------------------
-void initTH1() {																			// init the sensor
+void initTH(uint8_t channel) {																// init the sensor
 	
 	pinMode(DHT_PWR, OUTPUT);
 	
 	#ifdef SER_DBG
-		dbg << "init th1\n";
+		DBG(SER, F("init th: cnl: "), channel, F("\n"));
 	#endif
+}
+
+// this is called when HM wants to send measured values to peers or master
+// due to asynchronous measurement we simply can take the values very quick from variables
+void measureTH(uint8_t channel, cmTHSensWeather::s_sensVal *sensVal) {
+	int16_t t;
+	
+	#ifdef SER_DBG
+		//dbg << "msTH DS-t: " << celsius << ' ' << _TIME << '\n';
+	#endif
+	// take temp value from DS18B20
+	t = celsius / 10;
+	((uint8_t *)&(sensVal->temp))[0] = ((t >> 8) & 0x7F);									// battery status is added later
+	((uint8_t *)&(sensVal->temp))[1] = t & 0xFF;
+	
+	#ifdef SER_DBG
+		//dbg << "msTH t: " << DHT.temperature << ", h: " << DHT.humidity << ' ' << _TIME << '\n';
+	#endif
+	// take humidity value from DHT22
+	sensVal->hum = DHT.humidity / 10;
+	// fetch battery voltage
+	t = bat.getVolts();
+	((uint8_t *)&(sensVal->bat))[0] = t >> 8;
+	((uint8_t *)&(sensVal->bat))[1] = t & 0xFF;
 }
 
 void cnl0Change(void) {
 	
 	// set lowBat threshold
-	hm.bt.set(hm.ee.getRegAddr(0,0,0,REG_CHN0_LOW_BAT_LIMIT_TH)*10, BATTERY_MEAS_INTERVAL);
+	bat.set(*ptr_CM[0]->list[0]->ptr_to_val(REG_CHN0_LOW_BAT_LIMIT_TH)*10, BATTERY_MEAS_INTERVAL);
 
 	// set OSCCAL frequency
-	if (uint8_t oscCal = hm.ee.getRegAddr(0,0,0,REG_CHN0_OSCCAL)) {
+	if (uint8_t oscCal = *ptr_CM[0]->list[0]->ptr_to_val(REG_CHN0_OSCCAL)) {
 	#ifdef SER_DBG
 		dbg << F("will set OSCCAL: old=") << OSCCAL << F(", new=") << oscCal << F("\n");
 	#endif
@@ -114,48 +141,26 @@ void cnl0Change(void) {
 	#endif
 
 	// if burstRx is set ...
-	if (hm.ee.getRegAddr(0,0,0,REG_CHN0_BURST_RX)) {
+	if (*ptr_CM[0]->list[0]->ptr_to_val(REG_CHN0_BURST_RX)) {
 	#ifdef SER_DBG
-		dbg << F("PM=onradio\n");
+		//dbg << F("PM=onradio\n");
+		dbg << F("[PM=onradio]\n");
 	#endif
-		hm.pw.setMode(POWER_MODE_WAKEUP_ONRADIO);											// set mode to wakeup on burst
+		//pom.setMode(POWER_MODE_WAKEUP_ONRADIO);											// set mode to wakeup on burst
 	} else {	// no burstRx wanted
 		#ifdef SER_DBG
-			dbg << F("PM=250ms\n");
+			//dbg << F("PM=8000ms\n");
+			dbg << F("PM: no sleep\n");
 		#endif
-			// todo: set 8000ms if no peers attached
-			hm.pw.setMode(POWER_MODE_WAKEUP_250MS);											// set mode to awake every 8 secs
+			//pom.setMode(POWER_MODE_WAKEUP_8000MS);										// set mode to awake every 8 secs
+			pom.setMode(POWER_MODE_NO_SLEEP);
 	}
 
 	// fetch transmitDevTryMax
-	if ((transmitDevTryMax = hm.ee.getRegAddr(0,0,0,REG_CHN0_TRANS_DEV_TRY_MAX)) > 10)
+	if ((transmitDevTryMax = *ptr_CM[0]->list[0]->ptr_to_val(REG_CHN0_TRANS_DEV_TRY_MAX)) > 10)
 		transmitDevTryMax = 10;
 	else if (transmitDevTryMax < 1)
 		transmitDevTryMax = 1;
-}
-
-// this is called when HM wants to send measured values to peers or master
-// due to asynchronous measurement we simply can take the values very quick from variables
-void measureTH1(THSensor::s_meas *ptr) {
-	int16_t t;
-	
-	#ifdef SER_DBG
-		dbg << "msTH1 DS-t: " << celsius << ' ' << _TIME << '\n';
-	#endif
-	// take temp value from DS18B20
-	t = celsius / 10;
-	((uint8_t *)&(ptr->temp))[0] = ((t >> 8) & 0x7F);										// battery status is added later
-	((uint8_t *)&(ptr->temp))[1] = t & 0xFF;
-	
-	#ifdef SER_DBG
-		dbg << "msTH1 t: " << DHT.temperature << ", h: " << DHT.humidity << ' ' << _TIME << '\n';
-	#endif
-	// take humidity value from DHT22
-	ptr->hum = DHT.humidity / 10;
-	// fetch battery voltage
-	t = hm.bt.getVolts();
-	((uint8_t *)&(ptr->bat))[0] = t >> 8;
-	((uint8_t *)&(ptr->bat))[1] = t & 0xFF;
 }
 
 // this is called regularly - real measurement is done here
@@ -229,33 +234,98 @@ int main(void)
 			hm.poll();																		// poll the homematic main loop
 
 			// - user related -----------------------------------------
+#ifdef SER_DBG
 			serialEvent();
+#endif
 			measure();
     }
 }
 
 
 //- predefined functions --------------------------------------------------------------------------------------------------
+#ifdef SER_DBG
+/*
+* @brief Serial debug function to enter byte strings in the serial console.
+*        They are forwarded to the send/receive function and processed like
+*		 the cc1101 buffer
+*/
 void serialEvent() {
-	#ifdef SER_DBG
-	
-	static uint8_t i = 0;																	// it is a high byte next time
+
+	static uint8_t i = 0;																		// it is a high byte next time
 	while (Serial.available()) {
-		uint8_t inChar = (uint8_t)Serial.read();											// read a byte
-		if (inChar == '\n') {																// send to receive routine
+
+		uint8_t inChar = (uint8_t)Serial.read();												// read a byte
+
+		if (inChar == 'x') {
+			dumpEEprom();
 			i = 0;
-			hm.sn.active = 1;
+			return;
+		} else if (inChar == 's') {
+			DBG(SER, F("con: "), _HEX(snd_msg.buf, snd_msg.buf[0]+1), '\n');
+			snd_msg.temp_max_retr = 1;
+			snd_msg.active = 1;
+			i = 0;
+			return;
 		}
-		
-		if      ((inChar>96) && (inChar<103)) inChar-=87;									// a - f
-		else if ((inChar>64) && (inChar<71))  inChar-=55;									// A - F
-		else if ((inChar>47) && (inChar<58))  inChar-=48;									// 0 - 9
+
+		if ((inChar>96) && (inChar<103)) inChar -= 87;											// a - f
+		else if ((inChar>64) && (inChar<71))  inChar -= 55;										// A - F
+		else if ((inChar>47) && (inChar<58))  inChar -= 48;										// 0 - 9
 		else continue;
-		
-		if (i % 2 == 0) hm.sn.buf[i/2] = inChar << 4;										// high byte
-		else hm.sn.buf[i/2] |= inChar;														// low byte
-		
+
+		if (i % 2 == 0) snd_msg.buf[i / 2] = inChar << 4;											// high byte
+		else snd_msg.buf[i / 2] |= inChar;															// low byte
+
 		i++;
 	}
-	#endif
 }
+
+void dumpEEprom() {
+	uint16_t pAddr;
+
+	DBG(SER, F("\nEEPROM content\n\n"));
+	uint8_t *e = new uint8_t[32];
+	getEEPromBlock(0, 32, e);
+	DBG(SER, F("Magic:"), _HEX(e, 2), F("("), *(uint16_t*)e, F("), HMID:"), _HEX(e+2,3), F(", SERIAL:"), _HEX(e+5, 10), F("\nKEY_IDX:"), _HEX(e + 15, 1), F(", KEY:"), _HEX(e + 16, 16), F("\n\n"));
+
+	for (uint8_t i = 0; i < cnl_max; i++) {														// stepping through channels
+
+		for (uint8_t j = 0; j < 5; j++) {														// stepping through available lists
+			s_list_table *list = ptr_CM[i]->list[j];											// short hand to list table
+			s_peer_table *peer = &ptr_CM[i]->peerDB;											// short hand to peer db
+			if (!list) continue;																// skip if pointer is empty
+
+			uint8_t *x = new uint8_t[list->len];												// size an array as data buffer
+			DBG(SER, F("cnl:"), _HEXB(list->cnl), F(", lst:"), _HEXB(list->lst), F(", sLen:"), _HEXB(list->len), F(", pAddr:"), list->ee_addr, '\n');
+
+			memcpy_P(x, list->reg, list->len);
+			DBG(SER, F("register:  "), _HEX(x, list->len), '\n');
+			memcpy_P(x, list->def, list->len);
+			DBG(SER, F("default:   "), _HEX(x, list->len), '\n');
+
+			if (j == 3 || j == 4) {
+				DBG(SER, F("cmModul:\n"));
+				for (uint8_t k = 0; k < peer->max; k++) {
+					uint8_t *p = peer->get_peer(k);												// process peer
+					DBG(SER, F("peer   "), _HEXB(k), F(": "), _HEX(p, 4), F(" ("), peer->ee_addr + (k * 4), F(")\n"));
+					pAddr = list->ee_addr + (k * list->len);									// process list
+					getEEPromBlock(pAddr, list->len, x);
+					DBG(SER, F("eeprom "), _HEXB(k), F(": "), _HEX(x, list->len), F(" ("), pAddr, F(")\n"));
+				}
+
+				} else {
+				DBG(SER, F("cmModul:   "), _HEX(list->val, list->len), '\n');
+				getEEPromBlock(list->ee_addr, list->len, x);
+				DBG(SER, F("eeprom:    "), _HEX(x, list->len), '\n');
+
+			}
+			delete x;
+			DBG(SER, '\n');
+		}
+	}
+	delete e;
+}
+
+
+
+#endif
