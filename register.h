@@ -56,7 +56,7 @@
 	 * @brief HMID, Serial number, HM-Default-Key, Key-Index
 	 */
 	const uint8_t HMSerialData[] PROGMEM = {
-		/* HMID */			  0x58, 0x23, 0xFF,
+		/* HMID */			  0x58, 0x25, 0xFF,
 		/* Serial number */	  'X', 'M', 'S', '1', '2', '3', '4', '5', '6', '7',		// HBremote01 
 		/* Default-Key */	  HM_DEVICE_AES_KEY,
 		/* Key-Index */		  HM_DEVICE_AES_KEY_INDEX,
@@ -103,6 +103,6 @@
 	 * of eeprom variables, or setting a default link in the peer table for 2 channels
 	 */
 	void firstTimeStart(void) {
-		dbg << F("\nnew magic!\n\n");
+		dbg << F("new magic!\n");
 	}
 #endif

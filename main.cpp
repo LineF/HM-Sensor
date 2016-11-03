@@ -63,8 +63,6 @@ void setup() {
 
 	#ifdef SER_DBG																			// some debug
 		DBG_START(SER, F("SER.\n") );														// ...some debug
-
-		//dbgStart();																		// serial setup
 		DBG(SER, F("\nHB_UW_Sen_TH_Pn\n"));
 		DBG(SER, F(LIB_VERSION_STRING));													// ...and some information
 	#endif
@@ -75,7 +73,7 @@ void setup() {
 
 	// - user related -----------------------------------------
 	#ifdef SER_DBG
-		DBG(SER, F("HMID: "), _HEX(dev_ident.HMID,3), F(", MAID: "), _HEX(MAID,3), F("\n\n"));	// some debug
+		DBG(SER, F("HMID: "), _HEX(dev_ident.HMID,3), F(", MAID: "), _HEX(dev_operate.MAID,3), F("\n\n"));	// some debug
 	#endif
 }
 
@@ -149,10 +147,10 @@ void cnl0Change(void) {
 		//pom.setMode(POWER_MODE_WAKEUP_ONRADIO);											// set mode to wakeup on burst
 	} else {	// no burstRx wanted
 		#ifdef SER_DBG
-			//dbg << F("PM=8000ms\n");
+			//dbg << F("PM=250ms\n");
 			dbg << F("PM: no sleep\n");
 		#endif
-			//pom.setMode(POWER_MODE_WAKEUP_8000MS);										// set mode to awake every 8 secs
+			//pom.setMode(POWER_MODE_WAKEUP_250MS);											// set mode to awake every 250 msecs
 			pom.setMode(POWER_MODE_NO_SLEEP);
 	}
 
