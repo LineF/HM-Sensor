@@ -147,11 +147,11 @@ void cnl0Change(void) {
 		//pom.setMode(POWER_MODE_WAKEUP_ONRADIO);											// set mode to wakeup on burst
 	} else {	// no burstRx wanted
 		#ifdef SER_DBG
-			//dbg << F("PM=250ms\n");
-			dbg << F("PM: no sleep\n");
+			dbg << F("PM=250ms\n");
+			//dbg << F("PM: no sleep\n");
 		#endif
-			//pom.setMode(POWER_MODE_WAKEUP_250MS);											// set mode to awake every 250 msecs
-			pom.setMode(POWER_MODE_NO_SLEEP);
+			pom.setMode(POWER_MODE_WAKEUP_250MS);											// set mode to awake every 250 msecs
+			//pom.setMode(POWER_MODE_NO_SLEEP);
 	}
 
 	// fetch transmitDevTryMax
