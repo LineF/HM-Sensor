@@ -148,7 +148,6 @@
     <ListValues>
       <Value>F_CPU=8000000</Value>
       <Value>ARDUINO=10606</Value>
-      <Value>DEBUG</Value>
     </ListValues>
   </avrgcc.compiler.symbols.DefSymbols>
   <avrgcc.compiler.directories.IncludePaths>
@@ -169,7 +168,6 @@
     <ListValues>
       <Value>ARDUINO=10606</Value>
       <Value>F_CPU=8000000</Value>
-      <Value>DEBUG</Value>
       <Value>SER_DBG</Value>
       <Value>EE_DBG</Value>
       <Value>SN_DBG</Value>
