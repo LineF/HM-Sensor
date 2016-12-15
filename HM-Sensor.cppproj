@@ -233,69 +233,13 @@
       <SubType>compile</SubType>
       <Link>nas\00_debug-flag.h</Link>
     </Compile>
+    <Compile Include="NewAskSin\aes.cpp">
+      <SubType>compile</SubType>
+      <Link>nas\aes.cpp</Link>
+    </Compile>
     <Compile Include="NewAskSin\aes.h">
       <SubType>compile</SubType>
       <Link>nas\aes.h</Link>
-    </Compile>
-    <Compile Include="NewAskSin\aes128_dec.c">
-      <SubType>compile</SubType>
-      <Link>nas\aes128_dec.c</Link>
-    </Compile>
-    <Compile Include="NewAskSin\aes128_dec.h">
-      <SubType>compile</SubType>
-      <Link>nas\aes128_dec.h</Link>
-    </Compile>
-    <Compile Include="NewAskSin\aes128_enc.c">
-      <SubType>compile</SubType>
-      <Link>nas\aes128_enc.c</Link>
-    </Compile>
-    <Compile Include="NewAskSin\aes128_enc.h">
-      <SubType>compile</SubType>
-      <Link>nas\aes128_enc.h</Link>
-    </Compile>
-    <Compile Include="NewAskSin\aes_dec.c">
-      <SubType>compile</SubType>
-      <Link>nas\aes_dec.c</Link>
-    </Compile>
-    <Compile Include="NewAskSin\aes_dec.h">
-      <SubType>compile</SubType>
-      <Link>nas\aes_dec.h</Link>
-    </Compile>
-    <Compile Include="NewAskSin\aes_enc.c">
-      <SubType>compile</SubType>
-      <Link>nas\aes_enc.c</Link>
-    </Compile>
-    <Compile Include="NewAskSin\aes_enc.h">
-      <SubType>compile</SubType>
-      <Link>nas\aes_enc.h</Link>
-    </Compile>
-    <Compile Include="NewAskSin\aes_invsbox.c">
-      <SubType>compile</SubType>
-      <Link>nas\aes_invsbox.c</Link>
-    </Compile>
-    <Compile Include="NewAskSin\aes_invsbox.h">
-      <SubType>compile</SubType>
-      <Link>nas\aes_invsbox.h</Link>
-    </Compile>
-    <Compile Include="NewAskSin\aes_keyschedule.c">
-      <SubType>compile</SubType>
-      <Link>nas\aes_keyschedule.c</Link>
-    </Compile>
-    <Compile Include="NewAskSin\aes_keyschedule.h">
-      <SubType>compile</SubType>
-      <Link>nas\aes_keyschedule.h</Link>
-    </Compile>
-    <Compile Include="NewAskSin\aes_sbox.c">
-      <SubType>compile</SubType>
-      <Link>nas\aes_sbox.c</Link>
-    </Compile>
-    <Compile Include="NewAskSin\aes_sbox.h">
-      <SubType>compile</SubType>
-      <Link>nas\aes_sbox.h</Link>
-    </Compile>
-    <Compile Include="NewAskSin\aes_types.h">
-      <SubType>compile</SubType>
-      <Link>nas\aes_types.h</Link>
     </Compile>
     <Compile Include="NewAskSin\AS.cpp">
       <SubType>compile</SubType>
@@ -304,6 +248,10 @@
     <Compile Include="NewAskSin\AS.h">
       <SubType>compile</SubType>
       <Link>nas\AS.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\AS_aes.h">
+      <SubType>compile</SubType>
+      <Link>nas\AS_aes.h</Link>
     </Compile>
     <Compile Include="NewAskSin\AS_enum_defs.h">
       <SubType>compile</SubType>
@@ -376,14 +324,6 @@
     <Compile Include="NewAskSin\Defines.h">
       <SubType>compile</SubType>
       <Link>nas\Defines.h</Link>
-    </Compile>
-    <Compile Include="NewAskSin\gf256mul.h">
-      <SubType>compile</SubType>
-      <Link>nas\gf256mul.h</Link>
-    </Compile>
-    <Compile Include="NewAskSin\gf256mul.S">
-      <SubType>compile</SubType>
-      <Link>nas\gf256mul.S</Link>
     </Compile>
     <Compile Include="NewAskSin\HAL.cpp">
       <SubType>compile</SubType>

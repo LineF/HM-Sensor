@@ -27,6 +27,7 @@
      * to be defined in the user sketch.
      */
 	AS hm;                                                                  // asksin framework
+	AES *aes = new NO_AES;													// NO_AES or HAS_AES
 
 
 	/*
@@ -42,9 +43,9 @@
 	//uint8_t transmDevTryMax; // 0x14,             startBit:0, bits:8
 	//uint8_t osccal;          // 0x23              startBit:0, bits:8
 
-	const uint8_t cmMaintenance_ChnlReg[] PROGMEM = { 0x01,0x05,0x0a,0x0b,0x0c,0x12,0x14,0x23, };
-	const uint8_t cmMaintenance_ChnlDef[] PROGMEM = { 0x00,0x40,0x00,0x00,0x00,0x15,0x03,0x00, };
-	const uint8_t cmMaintenance_ChnlLen = 8;
+	const uint8_t cmMaintenance_ChnlReg[] PROGMEM = { 0x01,0x05,0x08,0x0a,0x0b,0x0c,0x12,0x14,0x23, };
+	const uint8_t cmMaintenance_ChnlDef[] PROGMEM = { 0x00,0x40,0x00,0x00,0x00,0x00,0x15,0x03,0x00, };
+	const uint8_t cmMaintenance_ChnlLen = sizeof(cmMaintenance_ChnlReg);
 
 	cmMaster *ptr_CM[2] = {
 		new cmMaintenance(0),
@@ -56,8 +57,8 @@
 	 * @brief HMID, Serial number, HM-Default-Key, Key-Index
 	 */
 	const uint8_t HMSerialData[] PROGMEM = {
-		/* HMID */			  0x58, 0x25, 0xFF,
-		/* Serial number */	  'X', 'M', 'S', '1', '2', '3', '4', '5', '6', '7',		// HBremote01 
+		/* HMID */			  0x58, 0x25, 0xA3,
+		/* Serial number */	  'M', 'P', 'T', 'H', '0', '0', '0', '0', '4', '0',		// HBremote01 
 		/* Default-Key */	  HM_DEVICE_AES_KEY,
 		/* Key-Index */		  HM_DEVICE_AES_KEY_INDEX,
 	};
