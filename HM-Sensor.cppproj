@@ -136,74 +136,74 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <ToolchainSettings>
       <AvrGccCpp>
-        <avrgcc.common.Device>-mmcu=atmega328p -B "%24(PackRepoDir)\atmel\ATmega_DFP\1.0.90\gcc\dev\atmega328p"</avrgcc.common.Device>
-        <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
-        <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
-        <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
-        <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
-        <avrgcc.common.outputfiles.usersignatures>False</avrgcc.common.outputfiles.usersignatures>
-        <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
-        <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
-        <avrgcc.compiler.symbols.DefSymbols>
-          <ListValues>
-            <Value>F_CPU=8000000</Value>
-            <Value>ARDUINO=10606</Value>
-          </ListValues>
-        </avrgcc.compiler.symbols.DefSymbols>
-        <avrgcc.compiler.directories.IncludePaths>
-          <ListValues>
-            <Value>%24(PackRepoDir)\atmel\ATmega_DFP\1.0.90\include</Value>
-            <Value>../../_Libs/Arduino</Value>
-            <Value>../../_Libs</Value>
-          </ListValues>
-        </avrgcc.compiler.directories.IncludePaths>
-        <avrgcc.compiler.optimization.level>Optimize for size (-Os)</avrgcc.compiler.optimization.level>
-        <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
-        <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
-        <avrgcc.compiler.optimization.DebugLevel>Default (-g2)</avrgcc.compiler.optimization.DebugLevel>
-        <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
-        <avrgcccpp.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcccpp.compiler.general.ChangeDefaultCharTypeUnsigned>
-        <avrgcccpp.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcccpp.compiler.general.ChangeDefaultBitFieldUnsigned>
-        <avrgcccpp.compiler.symbols.DefSymbols>
-          <ListValues>
-            <Value>ARDUINO=10606</Value>
-            <Value>F_CPU=8000000</Value>
-            <Value>SER_DBG</Value>
-            <Value>EE_DBG</Value>
-            <Value>SN_DBG</Value>
-            <Value>RV_DBG</Value>
-            <Value>TH_DBG</Value>
-            <Value>AS_DBG</Value>
-            <Value>CM_DBG</Value>
-          </ListValues>
-        </avrgcccpp.compiler.symbols.DefSymbols>
-        <avrgcccpp.compiler.directories.IncludePaths>
-          <ListValues>
-            <Value>%24(PackRepoDir)\atmel\ATmega_DFP\1.0.90\include</Value>
-            <Value>..</Value>
-            <Value>../NewAskSin</Value>
-            <Value>../../_Libs/Arduino</Value>
-            <Value>../../_Libs</Value>
-          </ListValues>
-        </avrgcccpp.compiler.directories.IncludePaths>
-        <avrgcccpp.compiler.optimization.level>Optimize for size (-Os)</avrgcccpp.compiler.optimization.level>
-        <avrgcccpp.compiler.optimization.PackStructureMembers>True</avrgcccpp.compiler.optimization.PackStructureMembers>
-        <avrgcccpp.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcccpp.compiler.optimization.AllocateBytesNeededForEnum>
-        <avrgcccpp.compiler.optimization.DebugLevel>Default (-g2)</avrgcccpp.compiler.optimization.DebugLevel>
-        <avrgcccpp.compiler.miscellaneous.OtherFlags>-std=c++11</avrgcccpp.compiler.miscellaneous.OtherFlags>
-        <avrgcccpp.compiler.miscellaneous.DoNotDeleteTemporaryFiles>True</avrgcccpp.compiler.miscellaneous.DoNotDeleteTemporaryFiles>
-        <avrgcccpp.linker.libraries.Libraries>
-          <ListValues>
-            <Value>libm</Value>
-          </ListValues>
-        </avrgcccpp.linker.libraries.Libraries>
-        <avrgcccpp.linker.libraries.LibrarySearchPaths>
-          <ListValues>
-            <Value>C:\Users\Martin\Documents\Atmel Studio\7.0\_Libs\Arduino</Value>
-          </ListValues>
-        </avrgcccpp.linker.libraries.LibrarySearchPaths>
-        <avrgcccpp.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcccpp.assembler.debugging.DebugLevel>
-      </AvrGccCpp>
+  <avrgcc.common.Device>-mmcu=atmega328p -B "%24(PackRepoDir)\atmel\ATmega_DFP\1.0.90\gcc\dev\atmega328p"</avrgcc.common.Device>
+  <avrgcc.common.outputfiles.hex>True</avrgcc.common.outputfiles.hex>
+  <avrgcc.common.outputfiles.lss>True</avrgcc.common.outputfiles.lss>
+  <avrgcc.common.outputfiles.eep>True</avrgcc.common.outputfiles.eep>
+  <avrgcc.common.outputfiles.srec>True</avrgcc.common.outputfiles.srec>
+  <avrgcc.common.outputfiles.usersignatures>False</avrgcc.common.outputfiles.usersignatures>
+  <avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcc.compiler.general.ChangeDefaultCharTypeUnsigned>
+  <avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcc.compiler.general.ChangeDefaultBitFieldUnsigned>
+  <avrgcc.compiler.symbols.DefSymbols>
+    <ListValues>
+      <Value>F_CPU=8000000</Value>
+      <Value>ARDUINO=10606</Value>
+    </ListValues>
+  </avrgcc.compiler.symbols.DefSymbols>
+  <avrgcc.compiler.directories.IncludePaths>
+    <ListValues>
+      <Value>%24(PackRepoDir)\atmel\ATmega_DFP\1.0.90\include</Value>
+      <Value>../../_Libs/Arduino</Value>
+      <Value>../../_Libs</Value>
+    </ListValues>
+  </avrgcc.compiler.directories.IncludePaths>
+  <avrgcc.compiler.optimization.level>Optimize for size (-Os)</avrgcc.compiler.optimization.level>
+  <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
+  <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
+  <avrgcc.compiler.optimization.DebugLevel>Default (-g2)</avrgcc.compiler.optimization.DebugLevel>
+  <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
+  <avrgcccpp.compiler.general.ChangeDefaultCharTypeUnsigned>True</avrgcccpp.compiler.general.ChangeDefaultCharTypeUnsigned>
+  <avrgcccpp.compiler.general.ChangeDefaultBitFieldUnsigned>True</avrgcccpp.compiler.general.ChangeDefaultBitFieldUnsigned>
+  <avrgcccpp.compiler.symbols.DefSymbols>
+    <ListValues>
+      <Value>ARDUINO=10606</Value>
+      <Value>F_CPU=8000000</Value>
+      <Value>SER_DBG</Value>
+      <Value>EE_DBG</Value>
+      <Value>SN_DBG</Value>
+      <Value>RV_DBG</Value>
+      <Value>TH_DBG</Value>
+      <Value>AS_DBG</Value>
+      <Value>CM_DBG</Value>
+    </ListValues>
+  </avrgcccpp.compiler.symbols.DefSymbols>
+  <avrgcccpp.compiler.directories.IncludePaths>
+    <ListValues>
+      <Value>%24(PackRepoDir)\atmel\ATmega_DFP\1.0.90\include</Value>
+      <Value>..</Value>
+      <Value>../NewAskSin</Value>
+      <Value>../../_Libs/Arduino</Value>
+      <Value>../../_Libs</Value>
+    </ListValues>
+  </avrgcccpp.compiler.directories.IncludePaths>
+  <avrgcccpp.compiler.optimization.level>Optimize for size (-Os)</avrgcccpp.compiler.optimization.level>
+  <avrgcccpp.compiler.optimization.PackStructureMembers>True</avrgcccpp.compiler.optimization.PackStructureMembers>
+  <avrgcccpp.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcccpp.compiler.optimization.AllocateBytesNeededForEnum>
+  <avrgcccpp.compiler.optimization.DebugLevel>Default (-g2)</avrgcccpp.compiler.optimization.DebugLevel>
+  <avrgcccpp.compiler.miscellaneous.OtherFlags>-std=c++11</avrgcccpp.compiler.miscellaneous.OtherFlags>
+  <avrgcccpp.compiler.miscellaneous.DoNotDeleteTemporaryFiles>True</avrgcccpp.compiler.miscellaneous.DoNotDeleteTemporaryFiles>
+  <avrgcccpp.linker.libraries.Libraries>
+    <ListValues>
+      <Value>libm</Value>
+    </ListValues>
+  </avrgcccpp.linker.libraries.Libraries>
+  <avrgcccpp.linker.libraries.LibrarySearchPaths>
+    <ListValues>
+      <Value>C:\Users\Martin\Documents\Atmel Studio\7.0\_Libs\Arduino</Value>
+    </ListValues>
+  </avrgcccpp.linker.libraries.LibrarySearchPaths>
+  <avrgcccpp.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcccpp.assembler.debugging.DebugLevel>
+</AvrGccCpp>
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
@@ -241,25 +241,53 @@
       <SubType>compile</SubType>
       <Link>nas\aes.h</Link>
     </Compile>
-    <Compile Include="NewAskSin\AS.cpp">
+    <Compile Include="NewAskSin\as_aes.h">
       <SubType>compile</SubType>
-      <Link>nas\AS.cpp</Link>
+      <Link>nas\as_aes.h</Link>
     </Compile>
-    <Compile Include="NewAskSin\AS.h">
+    <Compile Include="NewAskSin\as_communication.cpp">
       <SubType>compile</SubType>
-      <Link>nas\AS.h</Link>
+      <Link>nas\as_communication.cpp</Link>
     </Compile>
-    <Compile Include="NewAskSin\AS_aes.h">
+    <Compile Include="NewAskSin\as_communication.h">
       <SubType>compile</SubType>
-      <Link>nas\AS_aes.h</Link>
+      <Link>nas\as_communication.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\as_conf_button.cpp">
+      <SubType>compile</SubType>
+      <Link>nas\as_conf_button.cpp</Link>
+    </Compile>
+    <Compile Include="NewAskSin\as_conf_button.h">
+      <SubType>compile</SubType>
+      <Link>nas\as_conf_button.h</Link>
     </Compile>
     <Compile Include="NewAskSin\AS_enum_defs.h">
       <SubType>compile</SubType>
       <Link>nas\AS_enum_defs.h</Link>
     </Compile>
+    <Compile Include="NewAskSin\AS_explain_msg.h">
+      <SubType>compile</SubType>
+      <Link>nas\AS_explain_msg.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\as_main.cpp">
+      <SubType>compile</SubType>
+      <Link>nas\as_main.cpp</Link>
+    </Compile>
+    <Compile Include="NewAskSin\as_main.h">
+      <SubType>compile</SubType>
+      <Link>nas\as_main.h</Link>
+    </Compile>
     <Compile Include="NewAskSin\AS_message_defs.h">
       <SubType>compile</SubType>
       <Link>nas\AS_message_defs.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\as_status_led.cpp">
+      <SubType>compile</SubType>
+      <Link>nas\as_status_led.cpp</Link>
+    </Compile>
+    <Compile Include="NewAskSin\as_status_led.h">
+      <SubType>compile</SubType>
+      <Link>nas\as_status_led.h</Link>
     </Compile>
     <Compile Include="NewAskSin\AS_type_defs.h">
       <SubType>compile</SubType>
@@ -272,14 +300,6 @@
     <Compile Include="NewAskSin\Battery.h">
       <SubType>compile</SubType>
       <Link>nas\Battery.h</Link>
-    </Compile>
-    <Compile Include="NewAskSin\CC1101.cpp">
-      <SubType>compile</SubType>
-      <Link>nas\CC1101.cpp</Link>
-    </Compile>
-    <Compile Include="NewAskSin\CC1101.h">
-      <SubType>compile</SubType>
-      <Link>nas\CC1101.h</Link>
     </Compile>
     <Compile Include="NewAskSin\cm.cpp">
       <SubType>compile</SubType>
@@ -313,14 +333,6 @@
       <SubType>compile</SubType>
       <Link>nas\cmTHSensWeather.h</Link>
     </Compile>
-    <Compile Include="NewAskSin\ConfButton.cpp">
-      <SubType>compile</SubType>
-      <Link>nas\ConfButton.cpp</Link>
-    </Compile>
-    <Compile Include="NewAskSin\ConfButton.h">
-      <SubType>compile</SubType>
-      <Link>nas\ConfButton.h</Link>
-    </Compile>
     <Compile Include="NewAskSin\Defines.h">
       <SubType>compile</SubType>
       <Link>nas\Defines.h</Link>
@@ -333,25 +345,25 @@
       <SubType>compile</SubType>
       <Link>nas\HAL.h</Link>
     </Compile>
-    <Compile Include="NewAskSin\HAL_atmega328P.h">
+    <Compile Include="NewAskSin\HAL_atmega.cpp">
       <SubType>compile</SubType>
-      <Link>nas\HAL_atmega328P.h</Link>
+      <Link>nas\HAL_atmega.cpp</Link>
     </Compile>
-    <Compile Include="NewAskSin\HAL_atmega32U4.h">
+    <Compile Include="NewAskSin\HAL_atmega.h">
       <SubType>compile</SubType>
-      <Link>nas\HAL_atmega32U4.h</Link>
+      <Link>nas\HAL_atmega.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\HAL_atmega_328P.h">
+      <SubType>compile</SubType>
+      <Link>nas\HAL_atmega_328P.h</Link>
+    </Compile>
+    <Compile Include="NewAskSin\HAL_atmega_32U4.h">
+      <SubType>compile</SubType>
+      <Link>nas\HAL_atmega_32U4.h</Link>
     </Compile>
     <Compile Include="NewAskSin\HAL_extern.h">
       <SubType>compile</SubType>
       <Link>nas\HAL_extern.h</Link>
-    </Compile>
-    <Compile Include="NewAskSin\InfraredSignalDetector.cpp">
-      <SubType>compile</SubType>
-      <Link>nas\InfraredSignalDetector.cpp</Link>
-    </Compile>
-    <Compile Include="NewAskSin\InfraredSignalDetector.h">
-      <SubType>compile</SubType>
-      <Link>nas\InfraredSignalDetector.h</Link>
     </Compile>
     <Compile Include="NewAskSin\macros.h">
       <SubType>compile</SubType>
@@ -364,14 +376,6 @@
     <Compile Include="NewAskSin\Power.h">
       <SubType>compile</SubType>
       <Link>nas\Power.h</Link>
-    </Compile>
-    <Compile Include="NewAskSin\StatusLed.cpp">
-      <SubType>compile</SubType>
-      <Link>nas\StatusLed.cpp</Link>
-    </Compile>
-    <Compile Include="NewAskSin\StatusLed.h">
-      <SubType>compile</SubType>
-      <Link>nas\StatusLed.h</Link>
     </Compile>
     <Compile Include="NewAskSin\Version.h">
       <SubType>compile</SubType>

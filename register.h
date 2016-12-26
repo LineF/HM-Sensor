@@ -5,7 +5,7 @@
 	/**
 	 * @brief Libraries needed to run AskSin library
 	 */
-	#include <AS.h>
+	#include <as_main.h>
 	#include "hardware.h"
 	#include "hmkey.h"
 	#include <cmMaintenance.h>
@@ -28,6 +28,9 @@
      */
 	AS hm;                                                                  // asksin framework
 	AES *aes = new NO_AES;													// NO_AES or HAS_AES
+	COM *com = new CC1101(&pin_B4, &pin_B3, &pin_B5, &pin_B2, &pin_D2);
+	CBN *cbn = new CBN(1, &pin_B0);
+	LED *led = new LED(&pin_D4, &pin_D3);
 
 
 	/*
@@ -91,9 +94,6 @@
      * here we can setup everything which is needed for a proper device operation
      */
 	void everyTimeStart(void) {
-		led.set(welcome);
-		btn.config(1);
-		//cnl0Change();														// initialize with values from eeprom
 	}
 
 	/**

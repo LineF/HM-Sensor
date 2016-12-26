@@ -21,17 +21,17 @@
 
 
 		//- cc1100 hardware CS and GDO0 definitions -------------------------------------------------------------------
-		#define CC_CS                  PIN_B2									// chip select
-		#define CC_GDO0                PIN_D2									// GDO0 pin, identify data received on falling edge
-		#define CC_MISO                PIN_B4									// SPI port MISO
-		#define CC_MOSI                PIN_B3									// SPI port MOSI
-		#define CC_SCLK                PIN_B5									// SPI port Clock
+//		#define CC_CS                  PIN_B2									// chip select
+//		#define CC_GDO0                PIN_D2									// GDO0 pin, identify data received on falling edge
+//		#define CC_MISO                PIN_B4									// SPI port MISO
+//		#define CC_MOSI                PIN_B3									// SPI port MOSI
+//		#define CC_SCLK                PIN_B5									// SPI port Clock
 
 
 		//- LED's definition ------------------------------------------------------------------------------------------
-		#define LED_RED                PIN_D4									// define the red led pin port
-		#define LED_GRN                PIN_D3									// define the green led		
-		#define LED_ACTIVE_LOW         0										// leds connected to GND = 0, VCC = 1
+//		#define LED_RED                PIN_D4									// define the red led pin port
+//		#define LED_GRN                PIN_D3									// define the green led		
+//		#define LED_ACTIVE_LOW         0										// leds connected to GND = 0, VCC = 1
 
 
 		//- configuration key  ----------------------------------------------------------------------------------------
