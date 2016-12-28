@@ -49,13 +49,13 @@ void setup() {
 	power_all_disable();																	// and everything else
 	
 	// todo: timer0 and SPI should enable internally
-	#ifdef LOW_FREQ_OSC
-		power_timer2_enable();
-		ASSR |= (1<<AS2);																	// enable async Timer/Counter 2
-		_delay_ms(1000);																	// wait for clean osc startup
-	#else
-		power_timer0_enable();
-	#endif
+//	#ifdef LOW_FREQ_OSC
+//		power_timer2_enable();
+//		ASSR |= (1<<AS2);																	// enable async Timer/Counter 2
+//		_delay_ms(1000);																	// wait for clean osc startup
+//	#else
+//		power_timer0_enable();
+//	#endif
 	power_spi_enable();																		// enable only needed functions
 
 
@@ -134,7 +134,7 @@ void cnl0Change(void) {
 	#endif
 		OSCCAL = getDefaultOSCCAL();
 	}
-	#ifndef LOW_FREQ_OSC
+	#ifndef TIMER2_LOW_FREQ_OSC
 		calibrateWatchdog();
 	#endif
 
