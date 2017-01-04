@@ -202,7 +202,9 @@ void measure() {
 		OW.reset();																			// attention - get ready to read result from DS18B20
 		OW.skip();																			// no rom selection
 		OW.write(0xBE);																		// read temp from scratchpad
-		celsius = ((uint32_t)(OW.read() | (OW.read() << 8)) * 100) >> 4;					// we need only first two bytes from scratchpad
+		int16_t t = ((int32_t)(OW.read() | (OW.read() << 8)) * 100) >> 4;					// we need only first two bytes from scratchpad
+		if (t != 8500)
+			celsius = t;
 	
 		#ifdef SER_DBG
 			dbg << "DS-t: " << celsius << ' ' << _TIME << '\n';
