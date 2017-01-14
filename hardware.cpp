@@ -8,7 +8,7 @@
 
 #include "hardware.h"
 #include <HAL.h>
-#include <HAL_extern.h>
+//#include <HAL_extern.h>
 
 void    initWakeupPin(void) {
 	#if defined(WAKE_UP_DDR)

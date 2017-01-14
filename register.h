@@ -5,11 +5,9 @@
 	/**
 	 * @brief Libraries needed to run AskSin library
 	 */
-	#include <as_main.h>
+	#include <newasksin.h>
 	#include "hardware.h"
 	#include "hmkey.h"
-	#include <cmMaintenance.h>
-	#include <cmTHSensWeather.h>
 
 	// Register in Channel 0
 	#define	REG_CHN0_BURST_RX					1							// Register 1.0 / 1.0: 0=burstRx off, otherwise on
@@ -26,11 +24,12 @@
      * declaration is in the register.h but the functions needs
      * to be defined in the user sketch.
      */
-	AS hm;                                                                  // asksin framework
-	AES *aes = new NO_AES;													// NO_AES or HAS_AES
+	AES *aes = new NO_AES;														// NO_AES or HAS_AES
 	COM *com = new CC1101(&pin_B4, &pin_B3, &pin_B5, &pin_B2, &pin_D2);
 	CBN *cbn = new CBN(1, &pin_B0);
 	LED *led = new LED(&pin_D4, &pin_D3);
+	BAT *bat = new EXT_BAT(3600000, 210, &pin_D7, &pin_C1, 10, 47);
+	POM *pom = new POM(POWER_MODE_WAKEUP_250MS);
 
 
 	/*
@@ -46,13 +45,13 @@
 	//uint8_t transmDevTryMax; // 0x14,             startBit:0, bits:8
 	//uint8_t osccal;          // 0x23              startBit:0, bits:8
 
-	const uint8_t cmMaintenance_ChnlReg[] PROGMEM = { 0x01,0x05,0x08,0x0a,0x0b,0x0c,0x12,0x14,0x23, };
-	const uint8_t cmMaintenance_ChnlDef[] PROGMEM = { 0x00,0x40,0x00,0x00,0x00,0x00,0x15,0x03,0x00, };
-	const uint8_t cmMaintenance_ChnlLen = sizeof(cmMaintenance_ChnlReg);
+	const uint8_t cm_maintenance_ChnlReg[] PROGMEM = { 0x01,0x05,0x08,0x0a,0x0b,0x0c,0x12,0x14,0x23, };
+	const uint8_t cm_maintenance_ChnlDef[] PROGMEM = { 0x00,0x40,0x00,0x00,0x00,0x00,0x15,0x03,0x00, };
+	const uint8_t cm_maintenance_ChnlLen = sizeof(cm_maintenance_ChnlReg);
 
-	cmMaster *ptr_CM[2] = {
-		new cmMaintenance(0),
-		new cmTHSensWeather(10),
+	CM_MASTER *cmm[2] = {
+		new CM_MAINTENANCE(0),
+		new cm_thsensor(10),
 	};
 
 

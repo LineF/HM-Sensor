@@ -7,19 +7,18 @@
 
 //- load library's --------------------------------------------------------------------------------------------------------
 #include <Arduino.h>
-#include <as_main.h>																				// ask sin framework
+#include <newasksin.h>																				// ask sin framework
+#include <avr/wdt.h>
+#include "00_debug-flag.h"
 #include "register.h"																		// configuration sheet
 #include "dht.h"
 #include "OneWire.h"
-#include <avr/wdt.h>
 
 //#define SER_DBG
 
 #define DHT_PWR		9																		// power for DHT22
 #define DHT_PIN		6																		// this pin DHT22 is connected to
 #define OW_PIN		5																		// this pin DS18B20 is connected to
-
-#include "00_debug-flag.h"
 
 
 dht DHT;
@@ -30,7 +29,6 @@ uint8_t transmitDevTryMax;
 
 void serialEvent();
 void dumpEEprom();
-
 
 
 //- arduino functions -----------------------------------------------------------------------------------------------------
@@ -48,27 +46,16 @@ void setup() {
 	ADCSRA = 0;																				// ADC off
 	power_all_disable();																	// and everything else
 	
-	// todo: timer0 and SPI should enable internally
-//	#ifdef LOW_FREQ_OSC
-//		power_timer2_enable();
-//		ASSR |= (1<<AS2);																	// enable async Timer/Counter 2
-//		_delay_ms(1000);																	// wait for clean osc startup
-//	#else
-//		power_timer0_enable();
-//	#endif
-	power_spi_enable();																		// enable only needed functions
-
-
 	// enable only what is really needed
-
 	#ifdef SER_DBG																			// some debug
 		DBG_START(SER, F("SER.\n") );														// ...some debug
 		DBG(SER, F("\nHB_UW_Sen_TH_Pn\n"));
 		DBG(SER, F(LIB_VERSION_STRING));													// ...and some information
 	#endif
-	
+
 	// - AskSin related ---------------------------------------
-	hm.init();																				// init the asksin framework
+	init_millis_timer2();																	// init timer2
+	hm->init();																				// init the asksin framework
 	sei();																					// enable interrupts
 
 	// - user related -----------------------------------------
@@ -90,7 +77,7 @@ void initTH(uint8_t channel) {																// init the sensor
 
 // this is called when HM wants to send measured values to peers or master
 // due to asynchronous measurement we simply can take the values very quick from variables
-void measureTH(uint8_t channel, cmTHSensWeather::s_sensVal *sensVal) {
+void measureTH(uint8_t channel, cm_thsensor::s_sensVal *sensVal) {
 	int16_t t;
 	
 	#ifdef SER_DBG
@@ -107,7 +94,7 @@ void measureTH(uint8_t channel, cmTHSensWeather::s_sensVal *sensVal) {
 	// take humidity value from DHT22
 	sensVal->hum = DHT.humidity / 10;
 	// fetch battery voltage
-	t = bat.getVolts();
+	t = bat->get_volts();
 	((uint8_t *)&(sensVal->bat))[0] = t >> 8;
 	((uint8_t *)&(sensVal->bat))[1] = t & 0xFF;
 }
@@ -115,10 +102,10 @@ void measureTH(uint8_t channel, cmTHSensWeather::s_sensVal *sensVal) {
 void cnl0Change(void) {
 	
 	// set lowBat threshold
-	bat.set(*ptr_CM[0]->list[0]->ptr_to_val(REG_CHN0_LOW_BAT_LIMIT_TH)*10, BATTERY_MEAS_INTERVAL);
+	bat->set(3600000, *cmm[0]->list[0]->ptr_to_val(REG_CHN0_LOW_BAT_LIMIT_TH)*10);		// check voltage evry hour (3600secs * 1000ms)
 
 	// set OSCCAL frequency
-	if (uint8_t oscCal = *ptr_CM[0]->list[0]->ptr_to_val(REG_CHN0_OSCCAL)) {
+	if (uint8_t oscCal = *cmm[0]->list[0]->ptr_to_val(REG_CHN0_OSCCAL)) {
 	#ifdef SER_DBG
 		dbg << F("will set OSCCAL: old=") << OSCCAL << F(", new=") << oscCal << F("\n");
 	#endif
@@ -139,7 +126,7 @@ void cnl0Change(void) {
 	#endif
 
 	// if burstRx is set ...
-	if (*ptr_CM[0]->list[0]->ptr_to_val(REG_CHN0_BURST_RX)) {
+	if (*cmm[0]->list[0]->ptr_to_val(REG_CHN0_BURST_RX)) {
 	#ifdef SER_DBG
 		//dbg << F("PM=onradio\n");
 		dbg << F("[PM=onradio]\n");
@@ -150,12 +137,12 @@ void cnl0Change(void) {
 			dbg << F("PM=250ms\n");
 			//dbg << F("PM: no sleep\n");
 		#endif
-			pom.setMode(POWER_MODE_WAKEUP_250MS);											// set mode to awake every 250 msecs
+			pom->setMode(POWER_MODE_WAKEUP_250MS);											// set mode to awake every 250 msecs
 			//pom.setMode(POWER_MODE_NO_SLEEP);
 	}
 
 	// fetch transmitDevTryMax
-	if ((transmitDevTryMax = *ptr_CM[0]->list[0]->ptr_to_val(REG_CHN0_TRANS_DEV_TRY_MAX)) > 10)
+	if ((transmitDevTryMax = *cmm[0]->list[0]->ptr_to_val(REG_CHN0_TRANS_DEV_TRY_MAX)) > 10)
 		transmitDevTryMax = 10;
 	else if (transmitDevTryMax < 1)
 		transmitDevTryMax = 1;
@@ -231,7 +218,7 @@ int main(void)
     while (1) 
     {
 			// - AskSin related ---------------------------------------
-			hm.poll();																		// poll the homematic main loop
+			hm->poll();																		// poll the homematic main loop
 
 			// - user related -----------------------------------------
 #ifdef SER_DBG
