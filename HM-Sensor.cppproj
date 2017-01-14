@@ -249,6 +249,14 @@
       <SubType>compile</SubType>
       <Link>nas\as_analyze.h</Link>
     </Compile>
+    <Compile Include="NewAskSin\as_battery.cpp">
+      <SubType>compile</SubType>
+      <Link>nas\as_battery.cpp</Link>
+    </Compile>
+    <Compile Include="NewAskSin\as_battery.h">
+      <SubType>compile</SubType>
+      <Link>nas\as_battery.h</Link>
+    </Compile>
     <Compile Include="NewAskSin\as_communication.cpp">
       <SubType>compile</SubType>
       <Link>nas\as_communication.cpp</Link>
@@ -281,6 +289,14 @@
       <SubType>compile</SubType>
       <Link>nas\AS_message_defs.h</Link>
     </Compile>
+    <Compile Include="NewAskSin\as_power.cpp">
+      <SubType>compile</SubType>
+      <Link>nas\as_power.cpp</Link>
+    </Compile>
+    <Compile Include="NewAskSin\as_power.h">
+      <SubType>compile</SubType>
+      <Link>nas\as_power.h</Link>
+    </Compile>
     <Compile Include="NewAskSin\as_status_led.cpp">
       <SubType>compile</SubType>
       <Link>nas\as_status_led.cpp</Link>
@@ -293,49 +309,29 @@
       <SubType>compile</SubType>
       <Link>nas\AS_type_defs.h</Link>
     </Compile>
-    <Compile Include="NewAskSin\Battery.cpp">
+    <Compile Include="NewAskSin\cm_maintenance.cpp">
       <SubType>compile</SubType>
-      <Link>nas\Battery.cpp</Link>
+      <Link>nas\cm_maintenance.cpp</Link>
     </Compile>
-    <Compile Include="NewAskSin\Battery.h">
+    <Compile Include="NewAskSin\cm_maintenance.h">
       <SubType>compile</SubType>
-      <Link>nas\Battery.h</Link>
+      <Link>nas\cm_maintenance.h</Link>
     </Compile>
-    <Compile Include="NewAskSin\cm.cpp">
+    <Compile Include="NewAskSin\cm_master.cpp">
       <SubType>compile</SubType>
-      <Link>nas\cm.cpp</Link>
+      <Link>nas\cm_master.cpp</Link>
     </Compile>
-    <Compile Include="NewAskSin\cm.h">
+    <Compile Include="NewAskSin\cm_master.h">
       <SubType>compile</SubType>
-      <Link>nas\cm.h</Link>
+      <Link>nas\cm_master.h</Link>
     </Compile>
-    <Compile Include="NewAskSin\cmMaintenance.cpp">
+    <Compile Include="NewAskSin\cm_thsensor.cpp">
       <SubType>compile</SubType>
-      <Link>nas\cmMaintenance.cpp</Link>
+      <Link>nas\cm_thsensor.cpp</Link>
     </Compile>
-    <Compile Include="NewAskSin\cmMaintenance.h">
+    <Compile Include="NewAskSin\cm_thsensor.h">
       <SubType>compile</SubType>
-      <Link>nas\cmMaintenance.h</Link>
-    </Compile>
-    <Compile Include="NewAskSin\cmMaster.cpp">
-      <SubType>compile</SubType>
-      <Link>nas\cmMaster.cpp</Link>
-    </Compile>
-    <Compile Include="NewAskSin\cmMaster.h">
-      <SubType>compile</SubType>
-      <Link>nas\cmMaster.h</Link>
-    </Compile>
-    <Compile Include="NewAskSin\cmTHSensWeather.cpp">
-      <SubType>compile</SubType>
-      <Link>nas\cmTHSensWeather.cpp</Link>
-    </Compile>
-    <Compile Include="NewAskSin\cmTHSensWeather.h">
-      <SubType>compile</SubType>
-      <Link>nas\cmTHSensWeather.h</Link>
-    </Compile>
-    <Compile Include="NewAskSin\Defines.h">
-      <SubType>compile</SubType>
-      <Link>nas\Defines.h</Link>
+      <Link>nas\cm_thsensor.h</Link>
     </Compile>
     <Compile Include="NewAskSin\HAL.cpp">
       <SubType>compile</SubType>
@@ -361,33 +357,25 @@
       <SubType>compile</SubType>
       <Link>nas\HAL_atmega_32U4.h</Link>
     </Compile>
-    <Compile Include="NewAskSin\HAL_extern.h">
+    <Compile Include="NewAskSin\newasksin.cpp">
       <SubType>compile</SubType>
-      <Link>nas\HAL_extern.h</Link>
+      <Link>nas\newasksin.cpp</Link>
     </Compile>
-    <Compile Include="NewAskSin\macros.h">
+    <Compile Include="NewAskSin\newasksin.h">
       <SubType>compile</SubType>
-      <Link>nas\macros.h</Link>
-    </Compile>
-    <Compile Include="NewAskSin\Power.cpp">
-      <SubType>compile</SubType>
-      <Link>nas\Power.cpp</Link>
-    </Compile>
-    <Compile Include="NewAskSin\Power.h">
-      <SubType>compile</SubType>
-      <Link>nas\Power.h</Link>
+      <Link>nas\newasksin.h</Link>
     </Compile>
     <Compile Include="NewAskSin\Version.h">
       <SubType>compile</SubType>
       <Link>nas\Version.h</Link>
     </Compile>
-    <Compile Include="NewAskSin\wait_timer.cpp">
+    <Compile Include="NewAskSin\waittimer.cpp">
       <SubType>compile</SubType>
-      <Link>nas\wait_timer.cpp</Link>
+      <Link>nas\waittimer.cpp</Link>
     </Compile>
-    <Compile Include="NewAskSin\wait_timer.h">
+    <Compile Include="NewAskSin\waittimer.h">
       <SubType>compile</SubType>
-      <Link>nas\wait_timer.h</Link>
+      <Link>nas\waittimer.h</Link>
     </Compile>
     <Compile Include="OneWire.cpp">
       <SubType>compile</SubType>
