@@ -277,6 +277,14 @@
       <SubType>compile</SubType>
       <Link>nas\AS_enum_defs.h</Link>
     </Compile>
+    <Compile Include="NewAskSin\as_helpers.cpp">
+      <SubType>compile</SubType>
+      <Link>nas\as_helpers.cpp</Link>
+    </Compile>
+    <Compile Include="NewAskSin\as_helpers.h">
+      <SubType>compile</SubType>
+      <Link>nas\as_helpers.h</Link>
+    </Compile>
     <Compile Include="NewAskSin\as_main.cpp">
       <SubType>compile</SubType>
       <Link>nas\as_main.cpp</Link>
