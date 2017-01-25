@@ -211,16 +211,13 @@
       <SubType>compile</SubType>
       <Link>cppfix.cpp</Link>
     </Compile>
+    <Compile Include="defines.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="dht.cpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="dht.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="hardware.cpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="hardware.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="hmkey.h">

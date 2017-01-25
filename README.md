@@ -29,3 +29,7 @@ Als Sendemodul kommt ein CC1101 auf einem günstigen Breakout-Board aus China zu
 Fotos vom fertigen Modul gibt's auch noch...
 
 Entwicklungsumgebung: Atmel Studio 7.0
+
+Der Branch "dev" ist mein aktueller Entwicklungszweig - die Version ist evtl. fehlerhaft oder gar nicht compilierbar.
+
+Das Release 1.3 ist das letzte stabile, 1.4 hat zusätzlich Code für die Verwendung eines 32KHz-Quarzes
