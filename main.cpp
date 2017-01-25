@@ -128,17 +128,17 @@ void cnl0Change(void) {
 	// if burstRx is set ...
 	if (*cmm[0]->list[0]->ptr_to_val(REG_CHN0_BURST_RX)) {
 	#ifdef SER_DBG
-		//dbg << F("PM=onradio\n");
-		dbg << F("[PM=onradio]\n");
+		dbg << F("PM=onradio\n");
+		//dbg << F("[PM=onradio]\n");
 	#endif
-		//pom.setMode(POWER_MODE_WAKEUP_ONRADIO);											// set mode to wakeup on burst
+		pom->setMode(POWER_MODE_WAKEUP_ONRADIO);										// set mode to wakeup on burst
 	} else {	// no burstRx wanted
 		#ifdef SER_DBG
 			dbg << F("PM=250ms\n");
 			//dbg << F("PM: no sleep\n");
 		#endif
-			pom->setMode(POWER_MODE_WAKEUP_250MS);											// set mode to awake every 250 msecs
-			//pom.setMode(POWER_MODE_NO_SLEEP);
+			pom->setMode(POWER_MODE_WAKEUP_250MS);										// set mode to awake every 250 msecs
+			//pom->setMode(POWER_MODE_NO_SLEEP);
 	}
 
 	// fetch transmitDevTryMax
