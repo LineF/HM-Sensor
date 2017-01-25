@@ -211,6 +211,10 @@ void measure() {
 
 int main(void)
 {
+	// Arduino init: initializes timers etc.
+	// not needed here - all timers/functions initialized by own functions
+	// init();
+	
 	// Initialize all functions and pins
 	setup();
 	
