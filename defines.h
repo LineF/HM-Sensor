@@ -17,7 +17,7 @@
 #define	REG_CHN0_TRANS_DEV_TRY_MAX			20							// Register 20.0 / 1.0: 1-10, maxRetryCount
 #define	REG_CHN0_OSCCAL						35							// Register 35.0 / 1.0: 0=default, other=ATMEL:OSCCAL
 
-#define	DEBOUNCE							5							// 5 ms debounce time for config key
+//#define	DEBOUNCE							5							// 5 ms debounce time for config key
 #define	TIMER2_LOW_FREQ_OSC												// use 32KHz crystal
 
 

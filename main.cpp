@@ -7,7 +7,7 @@
 
 //- load library's --------------------------------------------------------------------------------------------------------
 #include <Arduino.h>
-#include <newasksin.h>																				// ask sin framework
+#include <newasksin.h>																		// ask sin framework
 #include <avr/wdt.h>
 #include "00_debug-flag.h"
 #include "register.h"																		// configuration sheet
@@ -57,7 +57,7 @@ void setup() {
 	init_millis_timer2();																	// init timer2
 	hm->init();																				// init the asksin framework
 	sei();																					// enable interrupts
-
+ 
 	// - user related -----------------------------------------
 	#ifdef SER_DBG
 		DBG(SER, F("HMID: "), _HEX(dev_ident.HMID,3), F(", MAID: "), _HEX(dev_operate.MAID,3), F("\n\n"));	// some debug
