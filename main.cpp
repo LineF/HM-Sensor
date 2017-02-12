@@ -26,6 +26,7 @@ OneWire OW(OW_PIN);
 waitTimer thTimer;
 int16_t celsius;
 uint8_t transmitDevTryMax;
+uint8_t ledFreqTest = 0;
 
 void serialEvent();
 void dumpEEprom();
@@ -102,8 +103,20 @@ void measureTH(uint8_t channel, cm_thsensor::s_sensVal *sensVal) {
 void cnl0Change(void) {
 	
 	// set lowBat threshold
-	bat->set(3600000, *cmm[0]->list[0]->ptr_to_val(REG_CHN0_LOW_BAT_LIMIT_TH)*10);		// check voltage evry hour (3600secs * 1000ms)
+	bat->set(3600000, *cmm[0]->list[0]->ptr_to_val(REG_CHN0_LOW_BAT_LIMIT_TH)*10);		// check voltage every hour (3600secs * 1000ms)
 
+	// handle r/o factory osccal register
+	uint8_t factOscCal = getDefaultOSCCAL();
+
+	if (*cmm[0]->list[0]->ptr_to_val(REG_CHN0_FACT_OSCCAL) != factOscCal)
+	{
+		uint8_t a[2];
+		a[0] = REG_CHN0_FACT_OSCCAL;
+		a[1] = factOscCal;
+		DBG(SER, F("main: setting factOscCal register back to default: "), _HEX(a, 2), F("\n"));
+		cmm[0]->list[0]->write_array(a, 2);
+	}
+	
 	// set OSCCAL frequency
 	if (uint8_t oscCal = *cmm[0]->list[0]->ptr_to_val(REG_CHN0_OSCCAL)) {
 	#ifdef SER_DBG
@@ -117,9 +130,9 @@ void cnl0Change(void) {
 		OSCCAL = oscCal;
 	} else {
 	#ifdef SER_DBG
-		dbg << F("will set default OSCCAL: ") << getDefaultOSCCAL() << F("\n");
+		dbg << F("will set default OSCCAL: ") << factOscCal << F("\n");
 	#endif
-		OSCCAL = getDefaultOSCCAL();
+		OSCCAL = factOscCal;
 	}
 	#ifndef TIMER2_LOW_FREQ_OSC
 		calibrateWatchdog();
@@ -140,6 +153,9 @@ void cnl0Change(void) {
 			pom->setMode(POWER_MODE_WAKEUP_250MS);										// set mode to awake every 250 msecs
 			//pom->setMode(POWER_MODE_NO_SLEEP);
 	}
+
+	// check if frequency test output is wanted
+	ledFreqTest = ((*cmm[0]->list[0]->ptr_to_val(REG_CHN0_LED_MODE) & 0xC0) == 0xC0);
 
 	// fetch transmitDevTryMax
 	if ((transmitDevTryMax = *cmm[0]->list[0]->ptr_to_val(REG_CHN0_TRANS_DEV_TRY_MAX)) > 10)

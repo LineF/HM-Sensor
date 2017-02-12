@@ -7,8 +7,11 @@ use warnings;
 # $HMConfig::culHmModel{'F101'} = {name => 'HB-UW-Sen-THPL-I', st => 'THPLSensor', cyc => '00:10', rxt => 'l:w:c:f', lst  => 'p',   chn  => '',};
 $HMConfig::culHmModel{'F201'} = {name => 'HB-UW-Sen-TH-Pn', st => 'THPnSensor', cyc => '00:10', rxt => 'w:c', lst  => 'p',   chn  => '',};
 
+$HMConfig::culHmRegDefine{'ledMode'}       = {a=>5.6,s=>0.2,l=>0,min=>0,max=>3,c=>'lit',f=>'',u=>'',d=>0,t=>'LED Modes',lit=>{off=>0,on=>1,freqTest=>3}};
 $HMConfig::culHmRegDefine{'lowBatLimitTH'} = {a=>18.0,s=>1.0,l=>0,min=>1.0,max=>5,c=>'',f=>10,u=>'V',d=>0,t=>'Low batterie limit, step 0.1 V.'};
-$HMConfig::culHmRegDefine{'oscCal'} = {a=>35.0,s=>1.0,l=>0,min=>0,max=>255,c=>'',f=>'',u=>'',d=>0,t=>'OSCCAL: calibration value of controller frequency'};
+$HMConfig::culHmRegDefine{'oscCal'}        = {a=>35.0,s=>1.0,l=>0,min=>0,max=>255,c=>'',f=>'',u=>'',d=>0,t=>'OSCCAL: calibration value of controller frequency'};
+$HMConfig::culHmRegDefine{'factOscCal'}    = {a=>36.0,s=>1.0,l=>0,min=>0,max=>255,c=>'',f=>'',u=>'',d=>0,t=>'FACTOSCCAL: ReadOnly: factory defined value of OSCCAL'};
+$HMConfig::culHmRegDefine{'cyclMsgOffset'} = {a=>37.0,s=>1.0,l=>0,min=>-100,max=>100,c=>'',f=>'',u=>'',d=>0,t=>'cyclicMessageOffset in 50ms steps'};
 
 # Register model mapping
 $HMConfig::culHmRegModel{'HB-UW-Sen-TH-Pn'} = {
@@ -16,7 +19,9 @@ $HMConfig::culHmRegModel{'HB-UW-Sen-TH-Pn'} = {
 	'lowBatLimitTH'   => 1,
 	'ledMode'         => 1,
 	'transmDevTryMax' => 1,
-	'oscCal'          => 1
+	'oscCal'          => 1,
+	'factOscCal'      => 1,
+	'cyclMsgOffset'   => 1
 #	,'altitude'        => 1
 };
 
