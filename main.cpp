@@ -27,6 +27,7 @@ waitTimer thTimer;
 int16_t celsius;
 uint8_t transmitDevTryMax;
 uint8_t ledFreqTest = 0;
+uint8_t factOscCal;
 
 void serialEvent();
 void dumpEEprom();
@@ -46,7 +47,9 @@ void setup() {
 	EIMSK = 0;																				// disable external interrupts
 	ADCSRA = 0;																				// ADC off
 	power_all_disable();																	// and everything else
-	
+
+	factOscCal = getDefaultOSCCAL();
+
 	// enable only what is really needed
 	#ifdef SER_DBG																			// some debug
 		DBG_START(SER, F("SER.\n") );														// ...some debug
@@ -81,17 +84,13 @@ void initTH(uint8_t channel) {																// init the sensor
 void measureTH(uint8_t channel, cm_thsensor::s_sensVal *sensVal) {
 	int16_t t;
 	
-	#ifdef SER_DBG
-		//dbg << "msTH DS-t: " << celsius << ' ' << _TIME << '\n';
-	#endif
+	//DBG(SER, "msTH DS-t: ", celsius, F(" "), _TIME, F("\n"));
 	// take temp value from DS18B20
 	t = celsius / 10;
 	((uint8_t *)&(sensVal->temp))[0] = ((t >> 8) & 0x7F);									// battery status is added later
 	((uint8_t *)&(sensVal->temp))[1] = t & 0xFF;
 	
-	#ifdef SER_DBG
-		//dbg << "msTH t: " << DHT.temperature << ", h: " << DHT.humidity << ' ' << _TIME << '\n';
-	#endif
+	//DBG(SER, "msTH t: ", DHT.temperature, ", h: ", DHT.humidity, ' ', _TIME, F("\n"));
 	// take humidity value from DHT22
 	sensVal->hum = DHT.humidity / 10;
 	// fetch battery voltage
@@ -106,8 +105,6 @@ void cnl0Change(void) {
 	bat->set(3600000, *cmm[0]->list[0]->ptr_to_val(REG_CHN0_LOW_BAT_LIMIT_TH)*10);		// check voltage every hour (3600secs * 1000ms)
 
 	// handle r/o factory osccal register
-	uint8_t factOscCal = getDefaultOSCCAL();
-
 	if (*cmm[0]->list[0]->ptr_to_val(REG_CHN0_FACT_OSCCAL) != factOscCal)
 	{
 		uint8_t a[2];
@@ -119,9 +116,7 @@ void cnl0Change(void) {
 	
 	// set OSCCAL frequency
 	if (uint8_t oscCal = *cmm[0]->list[0]->ptr_to_val(REG_CHN0_OSCCAL)) {
-	#ifdef SER_DBG
-		dbg << F("will set OSCCAL: old=") << OSCCAL << F(", new=") << oscCal << F("\n");
-	#endif
+		DBG(SER, F("will set OSCCAL: old="), OSCCAL, F(", new="), oscCal, F("\n"));
 		// Attention: your controller my have other factory calibration !!
 		// If you are unsure about the internal RC-frequency of your chip then use factory default (oscCal-Reg = 0)
 		// my chip: 1kHz - 8A=994Hz, 8B=998,4Hz, 8C=1001,6Hz, 8E=1010Hz
@@ -129,9 +124,7 @@ void cnl0Change(void) {
 
 		OSCCAL = oscCal;
 	} else {
-	#ifdef SER_DBG
-		dbg << F("will set default OSCCAL: ") << factOscCal << F("\n");
-	#endif
+		DBG(SER, F("will set default OSCCAL: "), factOscCal, F("\n"));
 		OSCCAL = factOscCal;
 	}
 	#ifndef TIMER2_LOW_FREQ_OSC
@@ -140,18 +133,20 @@ void cnl0Change(void) {
 
 	// if burstRx is set ...
 	if (*cmm[0]->list[0]->ptr_to_val(REG_CHN0_BURST_RX)) {
-	#ifdef SER_DBG
-		dbg << F("PM=onradio\n");
-		//dbg << F("[PM=onradio]\n");
-	#endif
-		pom->setMode(POWER_MODE_WAKEUP_ONRADIO);										// set mode to wakeup on burst
-	} else {	// no burstRx wanted
-		#ifdef SER_DBG
-			dbg << F("PM=250ms\n");
-			//dbg << F("PM: no sleep\n");
-		#endif
-			pom->setMode(POWER_MODE_WAKEUP_250MS);										// set mode to awake every 250 msecs
-			//pom->setMode(POWER_MODE_NO_SLEEP);
+		DBG(SER, F("PM=onradio\n"));
+		pom->setMode(POWER_MODE_WAKEUP_ONRADIO);											// set mode to wakeup on burst
+	} else {																				// no burstRx wanted
+			DBG(SER, F("peers: "), cmm[1]->peerDB.used_slots(), F("\n"));
+			if (cmm[1]->peerDB.used_slots())
+			{
+				DBG(SER, F("PM=250ms\n"));
+				pom->setMode(POWER_MODE_WAKEUP_250MS);										// set mode to awake every 250 msecs
+			}
+			else
+			{
+				DBG(SER, F("PM=8000ms\n"));
+				pom->setMode(POWER_MODE_WAKEUP_8000MS);										// set mode to awake every 250 msecs
+			}
 	}
 
 	// check if frequency test output is wanted

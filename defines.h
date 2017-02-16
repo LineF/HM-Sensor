@@ -19,8 +19,6 @@
 #define	REG_CHN0_FACT_OSCCAL				36							// Register 36.0 / 1.0: readonly register - do not set
 #define	REG_CHN0_CYCL_MSG_OFFSET			37							// Register 37.0 / 1.0: cyclic Message Offset in 50ms steps (-100..100)
 
-//#define	DEBOUNCE							5							// 5 ms debounce time for config key
 #define	TIMER2_LOW_FREQ_OSC												// use 32KHz crystal
-
 
 #endif /* DEFINES_H_ */
