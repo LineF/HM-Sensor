@@ -102,7 +102,7 @@ void measureTH(uint8_t channel, cm_thsensor::s_sensVal *sensVal) {
 void cnl0Change(void) {
 	
 	// set lowBat threshold
-	bat->set(3600000, *cmm[0]->list[0]->ptr_to_val(REG_CHN0_LOW_BAT_LIMIT_TH)*10);		// check voltage every hour (3600secs * 1000ms)
+	bat->set(900000, *cmm[0]->list[0]->ptr_to_val(REG_CHN0_LOW_BAT_LIMIT_TH)*10);			// check voltage every 1/4 hour (900secs * 1000ms)
 
 	// handle r/o factory osccal register
 	if (*cmm[0]->list[0]->ptr_to_val(REG_CHN0_FACT_OSCCAL) != factOscCal)

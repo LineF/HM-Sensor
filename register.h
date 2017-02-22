@@ -20,7 +20,7 @@
 	COM *com = new CC1101(&pin_B4, &pin_B3, &pin_B5, &pin_B2, &pin_D2);
 	CBN *cbn = new CBN(1, &pin_B0);
 	LED *led = new LED(&pin_D4, &pin_D3);
-	BAT *bat = new EXT_BAT(3600000, 210, &pin_D7, &pin_C1, 10, 47);
+	BAT *bat = new EXT_BAT(900000, 210, &pin_D7, &pin_C1, 10, 47);
 	POM *pom = new POM(POWER_MODE_WAKEUP_250MS);
 
 
