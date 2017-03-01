@@ -16,13 +16,26 @@
      * declaration is in the register.h but the functions needs
      * to be defined in the user sketch.
      */
-	AES *aes = new NO_AES;														// NO_AES or HAS_AES
-	COM *com = new CC1101(pinB4, pinB3, pinB5, pinB2, pinD2);
-	CBN *cbn = new CBN(1, pinB0);
-	LED *led = new LED(pinD4, pinD3);
-	BAT *bat = new EXT_BAT(3600000, 210, pinD7, pinC1, 10, 47);
-	POM *pom = new POM(POWER_MODE_WAKEUP_250MS);
+	//NO_AES as_aes;														// 32 byte flash, 77 byte sram
+	//HAS_AES as_aes;														// 2852 byte flash, 269 byte sram
+	NO_AES as_aes;
+	AES &aes = as_aes;														// NO_AES or HAS_AES
 
+	//COM com = CC1101(pinB4, pinB3, pinB5, pinB2, pinD2);
+	CC1101 cc1101(pinB4, pinB3, pinB5, pinB2, pinD2);
+	COM &com = cc1101;
+	CBN cbn(1, pinB0);
+	LED led(pinD4, pinD3);
+
+	//NO_BAT as_bat;
+	//BAT *bat = new INT_BAT(3600000, 30);									// ~170 byte more than no_bat
+	//BAT *bat = new EXT_BAT(3600000, 30, pinD7, pinC6, 10, 45);			// ~320 byte more than no_bat
+	EXT_BAT as_bat(3600000, 210, pinD7, pinC1, 10, 47);
+	BAT &bat = as_bat;
+	//EXT_BAT as_bat(900000, 210, pinD7, pinC1, 10, 47);
+	//BAT &bat = as_bat;
+	
+	POM pom(POWER_MODE_WAKEUP_250MS);
 
 	/*
 	* cmSwitch requires this functions in the user sketch:

@@ -95,7 +95,7 @@ void measureTH(uint8_t channel, cm_thsensor::s_sensVal *sensVal) {
 	// take humidity value from DHT22
 	sensVal->hum = DHT.humidity / 10;
 	// fetch battery voltage
-	t = bat->get_volts();
+	t = bat.get_volts();
 	((uint8_t *)&(sensVal->bat))[0] = t >> 8;
 	((uint8_t *)&(sensVal->bat))[1] = t & 0xFF;
 }
@@ -103,7 +103,7 @@ void measureTH(uint8_t channel, cm_thsensor::s_sensVal *sensVal) {
 void cnl0Change(void) {
 	
 	// set lowBat threshold
-	bat->set(3600000, *cmm[0]->list[0]->ptr_to_val(REG_CHN0_LOW_BAT_LIMIT_TH)*10);			// check voltage every hour
+	bat.set(3600000, *cmm[0]->list[0]->ptr_to_val(REG_CHN0_LOW_BAT_LIMIT_TH)*10);			// check voltage every hour
 
 	// handle r/o factory osccal register
 	if (*cmm[0]->list[0]->ptr_to_val(REG_CHN0_FACT_OSCCAL) != factOscCal)
@@ -135,18 +135,18 @@ void cnl0Change(void) {
 	// if burstRx is set ...
 	if (*cmm[0]->list[0]->ptr_to_val(REG_CHN0_BURST_RX)) {
 		DBG(SER, F("PM=onradio\n"));
-		pom->setMode(POWER_MODE_WAKEUP_ONRADIO);											// set mode to wakeup on burst
+		pom.setMode(POWER_MODE_WAKEUP_ONRADIO);											// set mode to wakeup on burst
 	} else {																				// no burstRx wanted
 			DBG(SER, F("peers: "), cmm[1]->peerDB.used_slots(), F("\n"));
 			if (cmm[1]->peerDB.used_slots())
 			{
 				DBG(SER, F("PM=250ms\n"));
-				pom->setMode(POWER_MODE_WAKEUP_250MS);										// set mode to awake every 250 msecs
+				pom.setMode(POWER_MODE_WAKEUP_250MS);										// set mode to awake every 250 msecs
 			}
 			else
 			{
 				DBG(SER, F("PM=8000ms\n"));
-				pom->setMode(POWER_MODE_WAKEUP_8000MS);										// set mode to awake every 250 msecs
+				pom.setMode(POWER_MODE_WAKEUP_8000MS);										// set mode to awake every 250 msecs
 			}
 	}
 
