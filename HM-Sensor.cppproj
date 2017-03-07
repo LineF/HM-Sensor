@@ -238,6 +238,10 @@
       <SubType>compile</SubType>
       <Link>nas\aes.h</Link>
     </Compile>
+    <Compile Include="NewAskSin\as_aes.cpp">
+      <SubType>compile</SubType>
+      <Link>nas\as_aes.cpp</Link>
+    </Compile>
     <Compile Include="NewAskSin\as_aes.h">
       <SubType>compile</SubType>
       <Link>nas\as_aes.h</Link>

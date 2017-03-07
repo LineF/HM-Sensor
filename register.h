@@ -17,10 +17,10 @@
      * to be defined in the user sketch.
      */
 	AES *aes = new NO_AES;														// NO_AES or HAS_AES
-	COM *com = new CC1101(&pin_B4, &pin_B3, &pin_B5, &pin_B2, &pin_D2);
-	CBN *cbn = new CBN(1, &pin_B0);
-	LED *led = new LED(&pin_D4, &pin_D3);
-	BAT *bat = new EXT_BAT(900000, 210, &pin_D7, &pin_C1, 10, 47);
+	COM *com = new CC1101(pinB4, pinB3, pinB5, pinB2, pinD2);
+	CBN *cbn = new CBN(1, pinB0);
+	LED *led = new LED(pinD4, pinD3);
+	BAT *bat = new EXT_BAT(3600000, 210, pinD7, pinC1, 10, 47);
 	POM *pom = new POM(POWER_MODE_WAKEUP_250MS);
 
 
@@ -41,6 +41,7 @@
 
 	const uint8_t cm_maintenance_ChnlReg[] PROGMEM = { 0x01,0x05,0x08,0x0a,0x0b,0x0c,0x12,0x14,0x23,0x24,0x25, };
 	const uint8_t cm_maintenance_ChnlDef[] PROGMEM = { 0x00,0x40,0x00,0x00,0x00,0x00,0x15,0x03,0x00,0x00,0x05, };
+		  uint8_t cm_maintenance_ChnlVal[sizeof(cm_maintenance_ChnlReg)];
 	const uint8_t cm_maintenance_ChnlLen = sizeof(cm_maintenance_ChnlReg);
 
 	CM_MASTER *cmm[2] = {
