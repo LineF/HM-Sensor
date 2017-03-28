@@ -55,6 +55,7 @@ void setup() {
 		DBG_START(SER, F("SER.\n") );														// ...some debug
 		DBG(SER, F("\nHB_UW_Sen_TH_Pn\n"));
 		DBG(SER, F(LIB_VERSION_STRING));													// ...and some information
+		DBG(SER, F("RAM free: "), freeRam(), F("\n"));										// ...and free RAM
 	#endif
 
 	// - AskSin related ---------------------------------------
