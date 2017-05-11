@@ -11,7 +11,6 @@ Der Sensor verwendet als Untermodul die NewAskSin Library von Trilu. Diese habe 
 
  - Erweiterung für WeatherSensor Messages
  - weitere Verbesserungen beim Energieverbrauch
- - Pairing-Status wird über LED sofort rückgemeldet
  - Stabilität beim Peering mit HM-CC-RT-DN verbessert
  - Einbau eines 32KHz Uhrenquarzes möglich - damit weitere Verbesserung der Übertragungsgenauigkeit zu einem HM-CC-RT-DN und weitere Reduktion des Stromverbrauchs
  - LED beim Senden kann abgeschaltet werden
@@ -23,13 +22,21 @@ Der Sensor verwendet als Untermodul die NewAskSin Library von Trilu. Diese habe 
  - der eine oder andere Fix (teilweise von Trilu bereits eingebaut)
 
 Schaltplan, Layout und Belichtungsplan gibt's im Unterordner Schematic.
+Die erste Version wurde mit Eagle erstellt (Unterordner Eagle)
 Da ich meine Platinen selber ätze, habe ich hier auf doppelseitiges Layout verzichtet - es gibt dafür ein paar Drahtbrücken.
 
+Die zweite Version wurde mit KiCad erstellt und dann bei einem professionellen Fertiger gefertigt (Unterordner Kicad).
+Da gibts auch die entsprechenden Bilder.
+
+Achtung:
+Die aktuelle Version ab Mitte Mai 2017 hat statt GDO0 jetzt GDO2 verbunden (Fehler beim Erstellen des Schaltplans).
+Dies wurde aber im Communication-Modul bei den Parametern IOCFG0 und IOCFG2 entsprechend berücksichtigt.
+
 Als Sendemodul kommt ein CC1101 auf einem günstigen Breakout-Board aus China zum Einsatz.
-Fotos vom fertigen Modul gibt's auch noch...
 
 Entwicklungsumgebung: Atmel Studio 7.0
 
-Der Branch "dev" ist mein aktueller Entwicklungszweig - die Version ist evtl. fehlerhaft oder gar nicht compilierbar.
+Der Branch "dev" ist mein aktueller Entwicklungszweig - die Version kann evtl. fehlerhaft oder gar nicht compilierbar sein.
+Im Zweifelsfall bitte die Releases verwenden.
 
-Das Release 1.3 ist das letzte stabile, 1.4 hat zusätzlich Code für die Verwendung eines 32KHz-Quarzes
+Das Release 2.0 ist das letzte stabile und basiert auf der neuen C++ Lib von Trilu (vielen Dank dafür!)
