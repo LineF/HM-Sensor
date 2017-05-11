@@ -67,8 +67,8 @@
 	 * @brief HMID, Serial number, HM-Default-Key, Key-Index
 	 */
 	const uint8_t HMSerialData[] PROGMEM = {
-		/* HMID */			  0x58, 0x25, 0xA3,
-		/* Serial number */	  'M', 'P', 'T', 'H', '0', '0', '0', '0', '4', '0',		// HBremote01 
+		/* HMID */			  0x58, 0x25, 0xA5,
+		/* Serial number */	  'M', 'P', 'T', 'H', '0', '0', '0', '0', '6', '0',		// HBremote01 
 		/* Default-Key */	  HM_DEVICE_AES_KEY,
 		/* Key-Index */		  HM_DEVICE_AES_KEY_INDEX,
 	};
